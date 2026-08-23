@@ -209,6 +209,22 @@
           "value": "design/KG/SystemArchitecture.json"
         }
       ]
+    },
+    {
+      "id": "dev-mem-openssl-complete",
+      "name": "openssl-selfsigned-cert 完成记录",
+      "type": "Deliverable",
+      "description": "2026-08-24 开发者 Actor 完成 EASY 评测 openssl-selfsigned-cert：官方验证器 6/6 通过（tests/test_openssl_selfsigned_cert.py）+ harbor run reward=1.0（jobs/openssl-smoke2）。提交 987485b（harness 脚手架）、07fb2b9（完成登记）。复用经验：environment.exec 用 timeout_sec；Windows 运行需 UTF-8 控制台 + PYTHONPATH=<repo>。",
+      "attributes": [
+        {
+          "name": "commit",
+          "value": "07fb2b9"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -354,7 +370,8 @@
       "parent_element_id": "actor-developer",
       "description": "开发者 Actor 的长期记忆 SUBVIEW 层级：开发实现、任务求解经验、命令陷阱与修复记录。",
       "included_elements": [
-        "actor-developer"
+        "actor-developer",
+        "dev-mem-openssl-complete"
       ],
       "included_relationships": []
     },
