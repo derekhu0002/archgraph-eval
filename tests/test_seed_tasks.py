@@ -66,8 +66,10 @@ def test_seed_task(task_dir: str, image: str):
     container = f"archgraph-eval-acceptance-{task_dir}"
     subprocess.run(["docker", "rm", "-f", container], capture_output=True)
 
+    # Use each image's default WORKDIR (task solutions rely on it, e.g. fix-git
+    # expects /app/personal-site as cwd).
     subprocess.run(
-        ["docker", "run", "-d", "--name", container, "--workdir", "/app", image, "sleep", "infinity"],
+        ["docker", "run", "-d", "--name", container, image, "sleep", "infinity"],
         check=True, capture_output=True, timeout=TIMEOUT,
     )
     try:
@@ -75,12 +77,14 @@ def test_seed_task(task_dir: str, image: str):
         _exec(container, solution.read_text(encoding="utf-8"))
 
         # Ensure a Python interpreter + pytest exist (Ubuntu vs python-slim images differ).
+        # --break-system-packages handles Ubuntu 24.04's PEP 668 externally-managed env.
         _exec(container,
               "command -v python3 >/dev/null || (export DEBIAN_FRONTEND=noninteractive && apt-get update -y && apt-get install -y python3 python3-pip)",
               check=False)
         _exec(container,
-              "python -m pip install -q pytest==8.4.1 2>/dev/null || python3 -m pip install -q pytest==8.4.1 2>/dev/null || "
-              "(export DEBIAN_FRONTEND=noninteractive && apt-get install -y python3-pip && python3 -m pip install -q pytest==8.4.1)",
+              "python -m pip install --break-system-packages -q pytest==8.4.1 2>/dev/null || "
+              "python3 -m pip install --break-system-packages -q pytest==8.4.1 2>/dev/null || "
+              "(export DEBIAN_FRONTEND=noninteractive && apt-get install -y python3-pip && python3 -m pip install --break-system-packages -q pytest==8.4.1)",
               check=False)
         verifier_text = verifier.read_text(encoding="utf-8")
         _exec(container, f"cat > /tmp/test_outputs.py << 'PYEOF'\n{verifier_text}\nPYEOF", check=False)
