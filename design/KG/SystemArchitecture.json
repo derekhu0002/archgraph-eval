@@ -299,15 +299,35 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round1_baseline",
+          "value": "0"
+        },
+        {
+          "name": "round2_skills",
+          "value": "0"
+        },
+        {
+          "name": "round2b",
+          "value": "0"
+        },
+        {
+          "name": "round2d_mask_fix",
+          "value": "1"
         },
         {
           "name": "commit",
-          "value": "6a92b26"
+          "value": "c63033f"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "scripts/solutions/crack-7z-hash/solve.sh (john --mask=?d?d?d?d + OMP_NUM_THREADS=1)"
         }
       ],
       "testcases": [
@@ -535,11 +555,11 @@
         },
         {
           "name": "commit",
-          "value": "edf2fd2"
+          "value": "c63033f"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/crack-7z-hash/solve.sh, harbor_agents/archgraph_agent.py"
+          "value": "scripts/solutions/crack-7z-hash/solve.sh"
         }
       ]
     },
@@ -624,6 +644,22 @@
         {
           "name": "commit_files",
           "value": "design/KG/SystemArchitecture.json, scripts/solutions/fix-git/solve.sh, harbor_agents/archgraph_agent.py"
+        }
+      ]
+    },
+    {
+      "id": "dev-mem-seed-round2",
+      "name": "k=5 种子任务 Round1→2 结果记录",
+      "type": "Deliverable",
+      "description": "2026-08-24 开发者 Actor 完成 Round 1→2：种子 5 任务 resolve 0/5 → 5/5（均经图谱 Skill 确定性路径）。Skill 匹配用 trigger_patterns 须贴合 instruction 原文；长脚本用 CMD_TIMEOUT=600s；crack-7z 用 john --mask=?d?d?d?d + OMP_NUM_THREADS=1（1-CPU 沙箱 69s 破解）。",
+      "attributes": [
+        {
+          "name": "commit",
+          "value": "c63033f"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     }
@@ -897,7 +933,8 @@
       "description": "开发者 Actor 的长期记忆 SUBVIEW 层级：开发实现、任务求解经验、命令陷阱与修复记录。",
       "included_elements": [
         "actor-developer",
-        "dev-mem-openssl-complete"
+        "dev-mem-openssl-complete",
+        "dev-mem-seed-round2"
       ],
       "included_relationships": []
     },
