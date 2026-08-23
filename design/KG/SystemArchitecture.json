@@ -390,6 +390,106 @@
           "acceptanceCriteria": "tests/test_seed_tasks.py::test_seed_task[fix-git]"
         }
       ]
+    },
+    {
+      "id": "skill-git-leak-recovery",
+      "name": "git 泄漏恢复 Skill",
+      "type": "Skill",
+      "description": "从 git 悬空对象/重写历史中恢复泄漏 secret 并彻底清除痕迹的标准化命令序列（git fsck --lost-found → 提取 secret[...] → reflog expire + gc prune）。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "git leak,git fsck,dangling commit,recover secret,secret[,lost and found"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/git-leak-recovery/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && [ -f secret.txt ] && grep -q 'secret\\[' secret.txt && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-crack-7z-hash",
+      "name": "7z 密码破解 Skill",
+      "type": "Skill",
+      "description": "用 7z2john.pl 提取 7z hash 并用 john 破解、解压并导出 secret 文件的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "crack,7z,7z2john,john the ripper,password protected archive,secrets.7z"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/crack-7z-hash/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && [ -f solution.txt ] && grep -q 'honeybear' solution.txt && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-count-dataset-tokens",
+      "name": "HF 数据集 token 计数 Skill",
+      "type": "Skill",
+      "description": "用 Qwen2.5-1.5B-Instruct tokenizer + datasets 统计 HuggingFace 数据集按 domain 过滤后的 token 总数的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "count tokens,tokenizer,deepseek,huggingface dataset,open thoughts,domain"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/count-dataset-tokens/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && [ -f answer.txt ] && grep -qE '^[0-9]+$' answer.txt && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-sqlite-db-truncate",
+      "name": "损坏 SQLite 二进制恢复 Skill",
+      "type": "Skill",
+      "description": "从被截断损坏的 SQLite 数据库二进制文件中直接扫描并恢复行数据（word + int/IEEE754 值）输出 recover.json 的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "sqlite,truncated database,recover rows,corrupted database,trunc.db,recover.json"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/sqlite-db-truncate/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && [ -f recover.json ] && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-fix-git",
+      "name": "git reflog 丢失提交恢复 Skill",
+      "type": "Skill",
+      "description": "从 .git/logs/HEAD 找到 detached HEAD 丢失提交、创建恢复分支并 merge 回 master 的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "fix git,reflog,detached head,recover commit,merge back,lost commit,personal-site"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/fix-git/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app/personal-site && git log --oneline | head -3 && echo SKILL_VERIFY_OK"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -512,6 +612,56 @@
       "source_name": "开发者 Developer",
       "target_name": "fix-git 评测任务",
       "statement": "开发者 Developer --(Assignment)--> fix-git 评测任务"
+    },
+    {
+      "id": "rel-skill-git-leak",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "skill-git-leak-recovery",
+      "target_id": "wp-git-leak-recovery",
+      "source_name": "git 泄漏恢复 Skill",
+      "target_name": "git-leak-recovery 评测任务",
+      "statement": "git 泄漏恢复 Skill --(Association)--> git-leak-recovery 评测任务"
+    },
+    {
+      "id": "rel-skill-crack7z",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "skill-crack-7z-hash",
+      "target_id": "wp-crack-7z-hash",
+      "source_name": "7z 密码破解 Skill",
+      "target_name": "crack-7z-hash 评测任务",
+      "statement": "7z 密码破解 Skill --(Association)--> crack-7z-hash 评测任务"
+    },
+    {
+      "id": "rel-skill-count-tokens",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "skill-count-dataset-tokens",
+      "target_id": "wp-count-dataset-tokens",
+      "source_name": "HF 数据集 token 计数 Skill",
+      "target_name": "count-dataset-tokens 评测任务",
+      "statement": "HF 数据集 token 计数 Skill --(Association)--> count-dataset-tokens 评测任务"
+    },
+    {
+      "id": "rel-skill-sqlite",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "skill-sqlite-db-truncate",
+      "target_id": "wp-sqlite-db-truncate",
+      "source_name": "损坏 SQLite 二进制恢复 Skill",
+      "target_name": "sqlite-db-truncate 评测任务",
+      "statement": "损坏 SQLite 二进制恢复 Skill --(Association)--> sqlite-db-truncate 评测任务"
+    },
+    {
+      "id": "rel-skill-fix-git",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "skill-fix-git",
+      "target_id": "wp-fix-git",
+      "source_name": "git reflog 丢失提交恢复 Skill",
+      "target_name": "fix-git 评测任务",
+      "statement": "git reflog 丢失提交恢复 Skill --(Association)--> fix-git 评测任务"
     }
   ],
   "views": [
@@ -521,7 +671,12 @@
       "parent_element_id": "1249",
       "parent_element_name": "Implementation and Migration Viewpoint",
       "included_elements": [
-        "skill-openssl-selfsigned-cert"
+        "skill-openssl-selfsigned-cert",
+        "skill-git-leak-recovery",
+        "skill-crack-7z-hash",
+        "skill-count-dataset-tokens",
+        "skill-sqlite-db-truncate",
+        "skill-fix-git"
       ],
       "included_relationships": []
     },
@@ -539,7 +694,12 @@
         "wp-crack-7z-hash",
         "wp-count-dataset-tokens",
         "wp-sqlite-db-truncate",
-        "wp-fix-git"
+        "wp-fix-git",
+        "skill-git-leak-recovery",
+        "skill-crack-7z-hash",
+        "skill-count-dataset-tokens",
+        "skill-sqlite-db-truncate",
+        "skill-fix-git"
       ],
       "included_relationships": [
         "rel-dev-openssl",
@@ -549,7 +709,12 @@
         "rel-dev-crack7z",
         "rel-dev-count-tokens",
         "rel-dev-sqlite",
-        "rel-dev-fix-git"
+        "rel-dev-fix-git",
+        "rel-skill-git-leak",
+        "rel-skill-crack7z",
+        "rel-skill-count-tokens",
+        "rel-skill-sqlite",
+        "rel-skill-fix-git"
       ]
     },
     {

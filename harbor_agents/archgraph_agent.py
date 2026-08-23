@@ -114,6 +114,7 @@ class ArchGraphAgent(BaseAgent):
                                 if p.strip()
                             ],
                             "plan": attrs.get("command_plan", ""),
+                            "plan_path": attrs.get("plan_path", ""),
                             "verify_cmd": attrs.get("verify_command", ""),
                         }
                     )
@@ -228,22 +229,30 @@ class ArchGraphAgent(BaseAgent):
 
         # 1) Try the ARCHGRAPH skill path first (cross-task persistent knowledge).
         skill = self._match_skill(instruction)
-        if skill and skill.get("plan"):
-            context.metadata = {**(context.metadata or {}), "skill_id": skill.get("id")}
-            plan = skill["plan"].replace("\\n", "\n")
-            # Write the plan into the sandbox as a script, then execute it. This
-            # keeps heredocs (e.g. creating check_cert.py) intact.
-            write_cmd = (
-                "cat > /tmp/archgraph_skill.sh << 'ARCHGRAPH_SKILL_EOF'\n"
-                + plan
-                + "\nARCHGRAPH_SKILL_EOF\n"
-                + "chmod +x /tmp/archgraph_skill.sh"
-            )
-            await self._exec(environment, write_cmd)
-            await self._exec(environment, "bash /tmp/archgraph_skill.sh")
-            if skill.get("verify_cmd"):
-                await self._exec(environment, skill["verify_cmd"])
-            return
+        if skill:
+            plan = (skill.get("plan") or "").replace("\\n", "\n")
+            if skill.get("plan_path"):
+                # Read the plan from a repo file (host side) — keeps the graph compact.
+                repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                plan_file = os.path.join(repo_root, skill["plan_path"])
+                if os.path.exists(plan_file):
+                    with open(plan_file, "r", encoding="utf-8") as fh:
+                        plan = fh.read()
+            if plan:
+                context.metadata = {**(context.metadata or {}), "skill_id": skill.get("id")}
+                # Write the plan into the sandbox as a script, then execute it. This
+                # keeps heredocs (e.g. creating check_cert.py) intact.
+                write_cmd = (
+                    "cat > /tmp/archgraph_skill.sh << 'ARCHGRAPH_SKILL_EOF'\n"
+                    + plan
+                    + "\nARCHGRAPH_SKILL_EOF\n"
+                    + "chmod +x /tmp/archgraph_skill.sh"
+                )
+                await self._exec(environment, write_cmd)
+                await self._exec(environment, "bash /tmp/archgraph_skill.sh")
+                if skill.get("verify_cmd"):
+                    await self._exec(environment, skill["verify_cmd"])
+                return
 
         # 2) Fall back to the model-driven ReAct loop.
         await self._model_loop(instruction, environment, context, messages)
