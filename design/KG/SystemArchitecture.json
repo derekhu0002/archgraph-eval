@@ -190,6 +190,14 @@
         {
           "name": "verify_command",
           "value": "cd /app && python check_cert.py && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "edaa729"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     }
