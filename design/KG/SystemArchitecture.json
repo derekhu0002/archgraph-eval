@@ -153,6 +153,14 @@
         {
           "name": "difficulty",
           "value": "easy"
+        },
+        {
+          "name": "commit",
+          "value": "b279634"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
