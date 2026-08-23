@@ -74,11 +74,17 @@ def test_seed_task(task_dir: str, image: str):
         # Apply the reference solution (may install deps; internet allowed).
         _exec(container, solution.read_text(encoding="utf-8"))
 
-        # Install pytest and copy the official verifier in, then run it.
-        _exec(container, "pip install -q pytest==8.4.1", check=False)
+        # Ensure a Python interpreter + pytest exist (Ubuntu vs python-slim images differ).
+        _exec(container,
+              "command -v python3 >/dev/null || (export DEBIAN_FRONTEND=noninteractive && apt-get update -y && apt-get install -y python3 python3-pip)",
+              check=False)
+        _exec(container,
+              "python -m pip install -q pytest==8.4.1 2>/dev/null || python3 -m pip install -q pytest==8.4.1 2>/dev/null || "
+              "(export DEBIAN_FRONTEND=noninteractive && apt-get install -y python3-pip && python3 -m pip install -q pytest==8.4.1)",
+              check=False)
         verifier_text = verifier.read_text(encoding="utf-8")
         _exec(container, f"cat > /tmp/test_outputs.py << 'PYEOF'\n{verifier_text}\nPYEOF", check=False)
-        result = _exec(container, "cd /app && python -m pytest /tmp/test_outputs.py -q", check=False)
+        result = _exec(container, "cd /app && (python -m pytest /tmp/test_outputs.py -q 2>/dev/null || python3 -m pytest /tmp/test_outputs.py -q)", check=False)
 
         evidence_dir = REPO_ROOT / ".argo" / "temp" / "acceptance" / task_dir
         evidence_dir.mkdir(parents=True, exist_ok=True)
