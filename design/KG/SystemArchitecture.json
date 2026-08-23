@@ -246,11 +246,23 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round1_baseline",
+          "value": "0"
+        },
+        {
+          "name": "round2_skills",
+          "value": "1"
         },
         {
           "name": "commit",
-          "value": "6a92b26"
+          "value": "2bbc5d5"
         },
         {
           "name": "commit_files",
@@ -328,15 +340,31 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round1_baseline",
+          "value": "0"
+        },
+        {
+          "name": "round2_skills",
+          "value": "0"
+        },
+        {
+          "name": "round2b_fix_timeout",
+          "value": "1"
         },
         {
           "name": "commit",
-          "value": "6a92b26"
+          "value": "095e496"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, harbor_agents/archgraph_agent.py (CMD_TIMEOUT 600s)"
         }
       ],
       "testcases": [
@@ -369,11 +397,23 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round1_baseline",
+          "value": "0"
+        },
+        {
+          "name": "round2_skills",
+          "value": "1"
         },
         {
           "name": "commit",
-          "value": "6a92b26"
+          "value": "2bbc5d5"
         },
         {
           "name": "commit_files",
@@ -410,15 +450,31 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round1_baseline",
+          "value": "0"
+        },
+        {
+          "name": "round2_skills",
+          "value": "0"
+        },
+        {
+          "name": "round2b_fix_triggers",
+          "value": "1"
         },
         {
           "name": "commit",
-          "value": "6a92b26"
+          "value": "bcb134e"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json (fix-git trigger_patterns)"
         }
       ],
       "testcases": [
