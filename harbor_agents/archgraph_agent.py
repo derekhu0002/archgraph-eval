@@ -34,6 +34,13 @@ try:  # litellm ships with harbor; used by the model-driven fallback path
 except Exception:  # pragma: no cover - optional
     litellm = None
 
+try:  # dotenv ships with harbor; used to load QWEN_KEY when harbor runs the agent
+    from dotenv import load_dotenv
+
+    load_dotenv(os.path.expanduser("~/.argo/.env"))
+except Exception:  # pragma: no cover - optional
+    pass
+
 
 class ArchGraphAgent(BaseAgent):
     """ARCHGRAPH harness adapter for Harbor (Terminal-Bench runner)."""
@@ -156,6 +163,8 @@ class ArchGraphAgent(BaseAgent):
             "api_key": api_key,
             "temperature": 0.2,
             "max_tokens": 2000,
+            # DashScope requires enable_thinking=false for non-streaming calls.
+            "extra_body": {"enable_thinking": False},
         }
         if api_key:
             kwargs["api_base"] = os.environ.get("QWEN_BASE_URL")
