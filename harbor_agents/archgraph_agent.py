@@ -48,8 +48,10 @@ class ArchGraphAgent(BaseAgent):
     #: Number of model-driven rounds before giving up.
     MAX_ROUNDS = 12
 
-    #: Timeout (seconds) for each sandbox command.
-    CMD_TIMEOUT = 120.0
+    #: Timeout (seconds) for each sandbox command. Skill scripts can install
+    #: deps / download datasets / run long tools (e.g. john), so keep this well
+    #: under the 900s task agent timeout but large enough for those workloads.
+    CMD_TIMEOUT = 600.0
 
     @staticmethod
     def name() -> str:
