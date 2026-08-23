@@ -139,6 +139,31 @@
           "value": "design/KG/SystemArchitecture.json"
         }
       ]
+    },
+    {
+      "id": "wp-openssl-selfsigned-cert",
+      "name": "openssl-selfsigned-cert 评测任务",
+      "type": "Work Package",
+      "description": "在一次性沙箱内用 OpenSSL 生成内部开发服务器自签名 TLS 证书：2048-bit RSA 私钥(权限≤600)、365 天自签名证书(CN=dev-internal.company.local, O=DevOps Team)、combined PEM、verification.txt 与 check_cert.py 校验脚本；以官方验证器 reward=1 为通过标准。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/openssl-selfsigned-cert"
+        },
+        {
+          "name": "difficulty",
+          "value": "easy"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "openssl-ssl-files-pass-official-verifier",
+          "description": "验证沙箱内产出全部要求的 SSL 文件与校验脚本，并通过 Terminal-Bench 官方验证器 test_outputs.py。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 一个装有 openssl 与 python 3.13 的沙箱（WORKDIR=/app）\nWHEN 按任务指令在 /app 下生成 /app/ssl/server.key(2048-bit, 权限≤600)、/app/ssl/server.crt(365天, CN=dev-internal.company.local, O=DevOps Team)、/app/ssl/server.pem、/app/ssl/verification.txt 与 /app/check_cert.py\nTHEN 官方验证器 tests/test_outputs.py 全部断言通过，reward=1",
+          "acceptanceCriteria": "tests/test_openssl_selfsigned_cert.py"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -181,6 +206,26 @@
       "source_name": "Archgraph Eval Team",
       "target_name": "评审员 Reviewer",
       "statement": "Archgraph Eval Team --(Association)--> 评审员 Reviewer"
+    },
+    {
+      "id": "rel-dev-openssl",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-openssl-selfsigned-cert",
+      "source_name": "开发者 Developer",
+      "target_name": "openssl-selfsigned-cert 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> openssl-selfsigned-cert 评测任务"
+    },
+    {
+      "id": "rel-team-openssl",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "team-collaboration",
+      "target_id": "wp-openssl-selfsigned-cert",
+      "source_name": "Archgraph Eval Team",
+      "target_name": "openssl-selfsigned-cert 评测任务",
+      "statement": "Archgraph Eval Team --(Association)--> openssl-selfsigned-cert 评测任务"
     }
   ],
   "views": [
@@ -197,8 +242,15 @@
       "view_name": "Implementation and Migration",
       "parent_element_id": "1249",
       "parent_element_name": "Implementation and Migration Viewpoint",
-      "included_elements": [],
-      "included_relationships": []
+      "included_elements": [
+        "wp-openssl-selfsigned-cert",
+        "actor-developer",
+        "team-collaboration"
+      ],
+      "included_relationships": [
+        "rel-dev-openssl",
+        "rel-team-openssl"
+      ]
     },
     {
       "view_id": "169",
