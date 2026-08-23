@@ -172,6 +172,26 @@
           "acceptanceCriteria": "tests/test_openssl_selfsigned_cert.py"
         }
       ]
+    },
+    {
+      "id": "skill-openssl-selfsigned-cert",
+      "name": "openssl 自签名证书生成 Skill",
+      "type": "Skill",
+      "description": "在沙箱内用 OpenSSL 生成内部开发服务器自签名 TLS 证书的标准化命令序列：2048-bit RSA 私钥(权限600)、365 天自签名证书(O=DevOps Team, CN=dev-internal.company.local)、combined PEM、verification.txt 与 check_cert.py 校验脚本；由官方验证器 reward=1 验证。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "openssl,self-signed,self signed,certificate,generate a certificate,tls cert,ssl cert"
+        },
+        {
+          "name": "command_plan",
+          "value": "#!/bin/bash\nset -e\ncd /app\nmkdir -p /app/ssl\nopenssl genrsa -out /app/ssl/server.key 2048\nchmod 600 /app/ssl/server.key\nopenssl req -new -x509 -key /app/ssl/server.key -out /app/ssl/server.crt -days 365 -subj \"/O=DevOps Team/CN=dev-internal.company.local\"\ncat /app/ssl/server.key /app/ssl/server.crt > /app/ssl/server.pem\nopenssl x509 -in /app/ssl/server.crt -noout -subject > /app/ssl/verification.txt\nopenssl x509 -in /app/ssl/server.crt -noout -dates >> /app/ssl/verification.txt\nopenssl x509 -in /app/ssl/server.crt -noout -fingerprint -sha256 >> /app/ssl/verification.txt\ncat > /app/check_cert.py << 'PYEOF'\nimport os\nimport ssl\nimport subprocess\nimport datetime\n\ndef check_certificate():\n    cert_file = \"/app/ssl/server.crt\"\n    key_file = \"/app/ssl/server.key\"\n    if not os.path.exists(cert_file):\n        print(\"Error: Certificate file does not exist\")\n        return False\n    process = subprocess.run([\"openssl\", \"x509\", \"-in\", cert_file, \"-text\", \"-noout\"], capture_output=True, text=True)\n    if process.returncode != 0:\n        print(\"Error: Failed to read certificate\")\n        return False\n    cert_text = process.stdout\n    common_name = \"Unknown\"\n    if \"CN = \" in cert_text:\n        common_name = cert_text.split(\"CN = \")[1].strip().splitlines()[0].strip()\n    print(\"Certificate Common Name: \" + common_name)\n    date_process = subprocess.run([\"openssl\", \"x509\", \"-in\", cert_file, \"-noout\", \"-enddate\"], capture_output=True, text=True)\n    expiry_date = \"Unknown\"\n    if \"notAfter=\" in date_process.stdout:\n        expiry_date = date_process.stdout.split(\"notAfter=\")[1].strip()\n        try:\n            date_obj = datetime.datetime.strptime(expiry_date, \"%b %d %H:%M:%S %Y %Z\")\n            expiry_date = date_obj.strftime(\"%Y-%m-%d\")\n        except ValueError:\n            pass\n    print(\"Certificate Expiration Date: \" + expiry_date)\n    try:\n        context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)\n        context.load_cert_chain(certfile=cert_file, keyfile=key_file)\n        print(\"Certificate verification successful\")\n        return True\n    except Exception as exc:\n        print(\"Certificate validation failed: \" + str(exc))\n        return False\n\nif __name__ == \"__main__\":\n    check_certificate()\nPYEOF\nchmod +x /app/check_cert.py\npython /app/check_cert.py"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && python check_cert.py && echo SKILL_VERIFY_OK"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -234,6 +254,16 @@
       "source_name": "Archgraph Eval Team",
       "target_name": "openssl-selfsigned-cert 评测任务",
       "statement": "Archgraph Eval Team --(Association)--> openssl-selfsigned-cert 评测任务"
+    },
+    {
+      "id": "rel-skill-openssl",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "skill-openssl-selfsigned-cert",
+      "target_id": "wp-openssl-selfsigned-cert",
+      "source_name": "openssl 自签名证书生成 Skill",
+      "target_name": "openssl-selfsigned-cert 评测任务",
+      "statement": "openssl 自签名证书生成 Skill --(Association)--> openssl-selfsigned-cert 评测任务"
     }
   ],
   "views": [
@@ -242,7 +272,9 @@
       "view_name": "AgentCapabilities",
       "parent_element_id": "1249",
       "parent_element_name": "Implementation and Migration Viewpoint",
-      "included_elements": [],
+      "included_elements": [
+        "skill-openssl-selfsigned-cert"
+      ],
       "included_relationships": []
     },
     {
@@ -253,11 +285,13 @@
       "included_elements": [
         "wp-openssl-selfsigned-cert",
         "actor-developer",
-        "team-collaboration"
+        "team-collaboration",
+        "skill-openssl-selfsigned-cert"
       ],
       "included_relationships": [
         "rel-dev-openssl",
-        "rel-team-openssl"
+        "rel-team-openssl",
+        "rel-skill-openssl"
       ]
     },
     {
