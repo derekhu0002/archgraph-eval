@@ -551,7 +551,7 @@
       "attributes": [
         {
           "name": "trigger_patterns",
-          "value": "fix git,reflog,detached head,recover commit,merge back,lost commit,personal-site"
+          "value": "personal site,find those changes,merge them into master,checked out master,can't find,lost changes,fix git,reflog,detached head,recover commit,merge back,personal-site"
         },
         {
           "name": "plan_path",
