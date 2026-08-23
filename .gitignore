@@ -2,3 +2,8 @@
 .venv/
 # Terminal-Bench dataset (re-pullable): harbor dataset download "terminal-bench/terminal-bench-2-1"
 terminal-bench-2-1/
+# Harbor job outputs + python caches
+jobs/
+.pytest_cache/
+__pycache__/
+*.pyc
