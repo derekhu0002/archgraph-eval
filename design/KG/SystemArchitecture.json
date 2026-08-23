@@ -55,6 +55,14 @@
         {
           "name": "agent",
           "value": "architect"
+        },
+        {
+          "name": "commit",
+          "value": "b0686c8"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "subdiagram_views": [
@@ -73,6 +81,14 @@
         {
           "name": "agent",
           "value": "developer"
+        },
+        {
+          "name": "commit",
+          "value": "b0686c8"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "subdiagram_views": [
@@ -91,6 +107,14 @@
         {
           "name": "agent",
           "value": "reviewer"
+        },
+        {
+          "name": "commit",
+          "value": "b0686c8"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "subdiagram_views": [
@@ -105,7 +129,16 @@
       "name": "Archgraph Eval Team",
       "type": "Business Collaboration",
       "description": "archgraph-eval 评测工程的三方协作体：架构设计、开发、评审三个 Business Actor 分工协作，通过验收闭环共同完成 Terminal-Bench 评测任务。",
-      "attributes": []
+      "attributes": [
+        {
+          "name": "commit",
+          "value": "b0686c8"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
+        }
+      ]
     }
   ],
   "relationships": [
