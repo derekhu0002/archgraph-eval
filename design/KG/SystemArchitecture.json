@@ -225,6 +225,171 @@
           "value": "design/KG/SystemArchitecture.json"
         }
       ]
+    },
+    {
+      "id": "wp-git-leak-recovery",
+      "name": "git-leak-recovery 评测任务",
+      "type": "Work Package",
+      "description": "从 git 历史中被重写删除的悬空对象里恢复泄漏的 secret 并写入 /app/secret.txt，再用 git fsck/gc 彻底清除所有痕迹，同时保留合法 'chore: init' 提交。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/git-leak-recovery"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "git"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "seed-git-leak-recovery-official-verifier",
+          "description": "验证 git-leak-recovery 任务的官方验证器在正确沙箱状态下通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 一个装有 git 的 Ubuntu 沙箱，/app/repo 含被重写删除的 secret\nWHEN 恢复悬空对象中的 secret 写入 /app/secret.txt，并清除所有痕迹保留合法提交\nTHEN 官方验证器 test_outputs.py 全部断言通过，reward=1",
+          "acceptanceCriteria": "tests/test_seed_tasks.py::test_seed_task[git-leak-recovery]"
+        }
+      ]
+    },
+    {
+      "id": "wp-crack-7z-hash",
+      "name": "crack-7z-hash 评测任务",
+      "type": "Work Package",
+      "description": "用 7z2john.pl 提取 secrets.7z 的 hash，john 破解密码(1998)后解压，把 secret_file.txt 内容写入 /app/solution.txt（honeybear）。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/crack-7z-hash"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "security"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "seed-crack-7z-hash-official-verifier",
+          "description": "验证 crack-7z-hash 任务的官方验证器在正确沙箱状态下通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 装有 john 的 Ubuntu 沙箱，/app 含 secrets.7z\nWHEN 用 7z2john.pl 提取 hash 并用 john 破解密码，解压并写 /app/solution.txt\nTHEN 官方验证器 test_outputs.py 断言通过，reward=1",
+          "acceptanceCriteria": "tests/test_seed_tasks.py::test_seed_task[crack-7z-hash]"
+        }
+      ]
+    },
+    {
+      "id": "wp-count-dataset-tokens",
+      "name": "count-dataset-tokens 评测任务",
+      "type": "Work Package",
+      "description": "用 Qwen2.5-1.5B-Instruct tokenizer 统计 HuggingFace 数据集 ryanmarten/OpenThoughts-1k-sample 科学域(chem/bio/phys)的 deepseek_reasoning+solution token 总数，写入 /app/answer.txt（79586）。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/count-dataset-tokens"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "data"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "seed-count-dataset-tokens-official-verifier",
+          "description": "验证 count-dataset-tokens 任务的官方验证器在正确沙箱状态下通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN python 沙箱，可访问 HF 数据集\nWHEN 用 Qwen2.5-1.5B tokenizer 统计科学域 token 总数并写 /app/answer.txt\nTHEN 官方验证器 test_outputs.py 断言通过，reward=1",
+          "acceptanceCriteria": "tests/test_seed_tasks.py::test_seed_task[count-dataset-tokens]"
+        }
+      ]
+    },
+    {
+      "id": "wp-sqlite-db-truncate",
+      "name": "sqlite-db-truncate 评测任务",
+      "type": "Work Package",
+      "description": "从被二进制截断损坏的 SQLite 数据库 /app/trunc.db 中恢复尽可能多的行，输出到 /app/recover.json（[{\"word\":..., \"value\":N}] 格式，含 int 与 IEEE754 double 编码）。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/sqlite-db-truncate"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "sql"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "seed-sqlite-db-truncate-official-verifier",
+          "description": "验证 sqlite-db-truncate 任务的官方验证器在正确沙箱状态下通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN python 沙箱，/app/trunc.db 为截断损坏的 SQLite 数据库\nWHEN 解析二进制恢复行并写 /app/recover.json\nTHEN 官方验证器 test_outputs.py 断言通过，reward=1",
+          "acceptanceCriteria": "tests/test_seed_tasks.py::test_seed_task[sqlite-db-truncate]"
+        }
+      ]
+    },
+    {
+      "id": "wp-fix-git",
+      "name": "fix-git 评测任务",
+      "type": "Work Package",
+      "description": "从 .git/logs/HEAD 找到 detached HEAD 丢失的提交，创建恢复分支并 merge 回 master，使 about.md 与 default.html 恢复到丢失提交内容。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/fix-git"
+        },
+        {
+          "name": "difficulty",
+          "value": "easy"
+        },
+        {
+          "name": "family",
+          "value": "git"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "seed-fix-git-official-verifier",
+          "description": "验证 fix-git 任务的官方验证器在正确沙箱状态下通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN python 沙箱，/app/personal-site 有 detached HEAD 丢失提交\nWHEN 从 reflog 恢复提交并 merge 回 master\nTHEN 官方验证器 test_outputs.py 断言通过，reward=1",
+          "acceptanceCriteria": "tests/test_seed_tasks.py::test_seed_task[fix-git]"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -297,6 +462,56 @@
       "source_name": "openssl 自签名证书生成 Skill",
       "target_name": "openssl-selfsigned-cert 评测任务",
       "statement": "openssl 自签名证书生成 Skill --(Association)--> openssl-selfsigned-cert 评测任务"
+    },
+    {
+      "id": "rel-dev-git-leak",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-git-leak-recovery",
+      "source_name": "开发者 Developer",
+      "target_name": "git-leak-recovery 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> git-leak-recovery 评测任务"
+    },
+    {
+      "id": "rel-dev-crack7z",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-crack-7z-hash",
+      "source_name": "开发者 Developer",
+      "target_name": "crack-7z-hash 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> crack-7z-hash 评测任务"
+    },
+    {
+      "id": "rel-dev-count-tokens",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-count-dataset-tokens",
+      "source_name": "开发者 Developer",
+      "target_name": "count-dataset-tokens 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> count-dataset-tokens 评测任务"
+    },
+    {
+      "id": "rel-dev-sqlite",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-sqlite-db-truncate",
+      "source_name": "开发者 Developer",
+      "target_name": "sqlite-db-truncate 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> sqlite-db-truncate 评测任务"
+    },
+    {
+      "id": "rel-dev-fix-git",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-fix-git",
+      "source_name": "开发者 Developer",
+      "target_name": "fix-git 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> fix-git 评测任务"
     }
   ],
   "views": [
@@ -319,12 +534,22 @@
         "wp-openssl-selfsigned-cert",
         "actor-developer",
         "team-collaboration",
-        "skill-openssl-selfsigned-cert"
+        "skill-openssl-selfsigned-cert",
+        "wp-git-leak-recovery",
+        "wp-crack-7z-hash",
+        "wp-count-dataset-tokens",
+        "wp-sqlite-db-truncate",
+        "wp-fix-git"
       ],
       "included_relationships": [
         "rel-dev-openssl",
         "rel-team-openssl",
-        "rel-skill-openssl"
+        "rel-skill-openssl",
+        "rel-dev-git-leak",
+        "rel-dev-crack7z",
+        "rel-dev-count-tokens",
+        "rel-dev-sqlite",
+        "rel-dev-fix-git"
       ]
     },
     {
