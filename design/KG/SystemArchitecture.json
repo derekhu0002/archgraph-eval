@@ -38,7 +38,11 @@
       "attributes": [
         {
           "name": "commit",
-          "value": "ead90ff"
+          "value": "a942c50"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json (workspace anchor); bootstrap ead90ff: SystemArchitecture.json, archgraph-eval.feap, .gitignore"
         }
       ]
     }
