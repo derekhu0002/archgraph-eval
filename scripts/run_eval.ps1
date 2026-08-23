@@ -31,7 +31,18 @@ param(
     [string]$Task = "",
     [int]$Trials = 1,
     [string]$Model = "dashscope/qwen3-32b",
-    [switch]$Full
+    [switch]$Full,
+    [switch]$Seed,
+    [string]$JobsDir = "jobs"
+)
+
+# Round-1/2 seed set (one task per family + an easy git task).
+$SeedTasks = @(
+    "git-leak-recovery",
+    "crack-7z-hash",
+    "count-dataset-tokens",
+    "sqlite-db-truncate",
+    "fix-git"
 )
 
 $ErrorActionPreference = "Stop"
