@@ -45,6 +45,67 @@
           "value": "design/KG/SystemArchitecture.json (workspace anchor); bootstrap ead90ff: SystemArchitecture.json, archgraph-eval.feap, .gitignore"
         }
       ]
+    },
+    {
+      "id": "actor-architect",
+      "name": "架构设计师 Architect",
+      "type": "Business Actor",
+      "description": "负责 archgraph-eval 评测工程的意图架构设计：为评测任务定义 Work Package 与可执行 GIVEN-WHEN-THEN 验收测试用例，设计 harness 主循环与 Skill/Rule 蒸馏方案，把架构决策写入意图图谱并维护自身 SUBVIEW 长期记忆。",
+      "attributes": [
+        {
+          "name": "agent",
+          "value": "architect"
+        }
+      ],
+      "subdiagram_views": [
+        {
+          "view_id": "view-architect-memory",
+          "view_name": "Architect Memory"
+        }
+      ]
+    },
+    {
+      "id": "actor-developer",
+      "name": "开发者 Developer",
+      "type": "Business Actor",
+      "description": "负责 archgraph-eval 评测工程的开发实现：编写 Harbor 适配层 harbor_agents/archgraph_agent.py 与运行脚本，并在评测沙箱内按指令产出正确文件状态；实现 GIVEN-WHEN-THEN 验收测试用例代码。",
+      "attributes": [
+        {
+          "name": "agent",
+          "value": "developer"
+        }
+      ],
+      "subdiagram_views": [
+        {
+          "view_id": "view-developer-memory",
+          "view_name": "Developer Memory"
+        }
+      ]
+    },
+    {
+      "id": "actor-reviewer",
+      "name": "评审员 Reviewer",
+      "type": "Business Actor",
+      "description": "负责 archgraph-eval 评测工程的代码与架构 REVIEW：对照 GIVEN-WHEN-THEN 验收用例执行回归、检查架构一致性、审核 commit 与图谱登记，对改动放行或打回。",
+      "attributes": [
+        {
+          "name": "agent",
+          "value": "reviewer"
+        }
+      ],
+      "subdiagram_views": [
+        {
+          "view_id": "view-reviewer-memory",
+          "view_name": "Reviewer Memory"
+        }
+      ]
+    },
+    {
+      "id": "team-collaboration",
+      "name": "Archgraph Eval Team",
+      "type": "Business Collaboration",
+      "description": "archgraph-eval 评测工程的三方协作体：架构设计、开发、评审三个 Business Actor 分工协作，通过验收闭环共同完成 Terminal-Bench 评测任务。",
+      "attributes": []
     }
   ],
   "relationships": [
@@ -57,6 +118,36 @@
       "target_id": "1240",
       "source_name": "Implementation and Migration Viewpoint",
       "target_name": "Application Cooperation Viewpoint"
+    },
+    {
+      "id": "rel-team-architect",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "team-collaboration",
+      "target_id": "actor-architect",
+      "source_name": "Archgraph Eval Team",
+      "target_name": "架构设计师 Architect",
+      "statement": "Archgraph Eval Team --(Association)--> 架构设计师 Architect"
+    },
+    {
+      "id": "rel-team-developer",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "team-collaboration",
+      "target_id": "actor-developer",
+      "source_name": "Archgraph Eval Team",
+      "target_name": "开发者 Developer",
+      "statement": "Archgraph Eval Team --(Association)--> 开发者 Developer"
+    },
+    {
+      "id": "rel-team-reviewer",
+      "name": "Association",
+      "type": "Association",
+      "source_id": "team-collaboration",
+      "target_id": "actor-reviewer",
+      "source_name": "Archgraph Eval Team",
+      "target_name": "评审员 Reviewer",
+      "statement": "Archgraph Eval Team --(Association)--> 评审员 Reviewer"
     }
   ],
   "views": [
@@ -90,11 +181,48 @@
       "included_elements": [
         "1249",
         "1240",
-        "archgraph-eval-workspace"
+        "archgraph-eval-workspace",
+        "actor-architect",
+        "actor-developer",
+        "actor-reviewer",
+        "team-collaboration"
       ],
       "included_relationships": [
-        "1161"
+        "1161",
+        "rel-team-architect",
+        "rel-team-developer",
+        "rel-team-reviewer"
       ]
+    },
+    {
+      "view_id": "view-architect-memory",
+      "view_name": "Architect Memory",
+      "parent_element_id": "actor-architect",
+      "description": "架构设计师 Actor 的长期记忆 SUBVIEW 层级：历史工作信息、架构决策、验收用例、Skill/Rule 记录。",
+      "included_elements": [
+        "actor-architect"
+      ],
+      "included_relationships": []
+    },
+    {
+      "view_id": "view-developer-memory",
+      "view_name": "Developer Memory",
+      "parent_element_id": "actor-developer",
+      "description": "开发者 Actor 的长期记忆 SUBVIEW 层级：开发实现、任务求解经验、命令陷阱与修复记录。",
+      "included_elements": [
+        "actor-developer"
+      ],
+      "included_relationships": []
+    },
+    {
+      "view_id": "view-reviewer-memory",
+      "view_name": "Reviewer Memory",
+      "parent_element_id": "actor-reviewer",
+      "description": "评审员 Actor 的长期记忆 SUBVIEW 层级：评审结论、回归结果、放行/打回记录。",
+      "included_elements": [
+        "actor-reviewer"
+      ],
+      "included_relationships": []
     }
   ]
 }
