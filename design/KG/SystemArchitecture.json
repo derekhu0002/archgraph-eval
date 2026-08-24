@@ -1363,11 +1363,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
         }
       ],
       "testcases": [
@@ -1416,11 +1416,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
         }
       ],
       "testcases": [
@@ -1473,11 +1473,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py, scripts/solutions/pypi-server/solve.sh"
         }
       ],
       "testcases": [
@@ -1530,11 +1530,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/build-cython-ext/solve.sh"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py, scripts/solutions/build-cython-ext/solve.sh"
         }
       ],
       "testcases": [
@@ -1583,11 +1583,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
         }
       ],
       "testcases": [
@@ -1640,11 +1640,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/chess-best-move/solve.sh"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py, scripts/solutions/chess-best-move/solve.sh"
         }
       ],
       "testcases": [
@@ -1693,11 +1693,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
         }
       ],
       "testcases": [
@@ -1746,11 +1746,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
         }
       ],
       "testcases": [
@@ -1783,7 +1783,7 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
@@ -1811,11 +1811,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/nginx-request-logging/solve.sh"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     },
@@ -1843,7 +1843,7 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
@@ -1871,7 +1871,7 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
@@ -1899,11 +1899,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/dna-insert/solve.sh"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     },
@@ -1927,7 +1927,7 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
@@ -1955,7 +1955,7 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
@@ -1983,11 +1983,11 @@
         },
         {
           "name": "commit",
-          "value": "pending"
+          "value": "4fb36ab"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/large-scale-text-editing/solve.sh"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     },
