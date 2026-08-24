@@ -753,7 +753,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round3",
+          "value": "0"
+        },
+        {
+          "name": "round3b",
+          "value": "1"
+        },
+        {
+          "name": "commit",
+          "value": "df58dcc"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
@@ -819,7 +839,31 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3",
+          "value": "0"
+        },
+        {
+          "name": "round3b",
+          "value": "0"
+        },
+        {
+          "name": "limitation",
+          "value": "compute/time-bound: pdflatex compile loop + apt exceeds 750s agent timeout on 1-CPU sandbox (reference solution also marginal)"
+        },
+        {
+          "name": "commit",
+          "value": "8931fe6"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, harbor_agents/archgraph_agent.py (CMD_TIMEOUT env-config)"
         }
       ],
       "testcases": [
@@ -852,7 +896,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round3",
+          "value": "0"
+        },
+        {
+          "name": "round3b_match_fix",
+          "value": "1"
+        },
+        {
+          "name": "commit",
+          "value": "df58dcc"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, harbor_agents/archgraph_agent.py (best-match skill lookup)"
         }
       ],
       "testcases": [
@@ -918,7 +982,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round3",
+          "value": "0"
+        },
+        {
+          "name": "round3b_match_fix",
+          "value": "1"
+        },
+        {
+          "name": "commit",
+          "value": "df58dcc"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, harbor_agents/archgraph_agent.py (best-match skill lookup)"
         }
       ],
       "testcases": [
