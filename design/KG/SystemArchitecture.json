@@ -31,6 +31,14 @@
         {
           "view_id": "view-round3-tasks",
           "view_name": "Round 3 Tasks"
+        },
+        {
+          "view_id": "view-round3c-tasks",
+          "view_name": "Round 3c Tasks"
+        },
+        {
+          "view_id": "view-round3c-skills",
+          "view_name": "Round 3c Skills"
         }
       ]
     },
@@ -1314,6 +1322,494 @@
           "value": "design/KG/SystemArchitecture.json, tests/test_round3_tasks.py"
         }
       ]
+    },
+    {
+      "id": "wp-git-multibranch",
+      "name": "git-multibranch 评测任务",
+      "type": "Work Package",
+      "description": "搭建 git 多分支自动部署：git init --bare + post-receive hook 把 main/dev 分支分别部署到 /var/www/html 与 /var/www/dev，配置 SSH 服务与 nginx。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/git-multibranch"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "git"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3c-git-multibranch-official-verifier",
+          "description": "验证 git-multibranch 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 空的 git bare 仓库与待配置的 web 目录\nWHEN 按官方解法创建 post-receive hook、SSH 与 nginx 部署\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3c_tasks.py::test_round3c_task[git-multibranch]"
+        }
+      ]
+    },
+    {
+      "id": "wp-nginx-request-logging",
+      "name": "nginx-request-logging 评测任务",
+      "type": "Work Package",
+      "description": "配置 nginx 详细访问日志（log_format detailed）与限流（limit_req_zone 10r/s），自定义 404 页，监听 8080 端口。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/nginx-request-logging"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "system"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3c-nginx-request-logging-official-verifier",
+          "description": "验证 nginx-request-logging 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 未配置的 nginx 环境\nWHEN 按官方解法配置 log_format detailed、limit_req、自定义 404 页并监听 8080\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3c_tasks.py::test_round3c_task[nginx-request-logging]"
+        }
+      ]
+    },
+    {
+      "id": "wp-pypi-server",
+      "name": "pypi-server 评测任务",
+      "type": "Work Package",
+      "description": "用 pypiserver 在 8080 端口搭建本地 PyPI 服务：htpasswd 认证（uploader/password），创建并构建 toy 包 vectorops 后 twine 上传。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/pypi-server"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "python"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3c-pypi-server-official-verifier",
+          "description": "验证 pypi-server 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 需搭建本地 PyPI 的环境\nWHEN 按官方解法启动 pypiserver、配置认证并上传 toy 包\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3c_tasks.py::test_round3c_task[pypi-server]"
+        }
+      ]
+    },
+    {
+      "id": "wp-build-cython-ext",
+      "name": "build-cython-ext 评测任务",
+      "type": "Work Package",
+      "description": "克隆 pyknotid 0.5.3，修补 numpy 弃用 API（gcd/np.float/np.complex/np.int），build_ext --inplace 编译 Cython 扩展并 pip install -e。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/build-cython-ext"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "python"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3c-build-cython-ext-official-verifier",
+          "description": "验证 build-cython-ext 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 需要编译 Cython 扩展的 pyknotid 仓库\nWHEN 按官方解法修补 numpy API 并 build_ext --inplace\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3c_tasks.py::test_round3c_task[build-cython-ext]"
+        }
+      ]
+    },
+    {
+      "id": "wp-dna-insert",
+      "name": "dna-insert 评测任务",
+      "type": "Work Package",
+      "description": "生信引物设计：安装 emboss/primer3，用 needle 比对 input/output 序列，为 39bp 插入片段设计正反向引物写入 primers.fasta。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/dna-insert"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "bio"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3c-dna-insert-official-verifier",
+          "description": "验证 dna-insert 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 含 input/output 两条序列的 sequences.fasta\nWHEN 按官方解法比对并设计正反向引物\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3c_tasks.py::test_round3c_task[dna-insert]"
+        }
+      ]
+    },
+    {
+      "id": "wp-chess-best-move",
+      "name": "chess-best-move 评测任务",
+      "type": "Work Package",
+      "description": "解析棋盘图 chess_board.png 为 FEN，用 stockfish 求出最佳/将杀走法，把 UCI 走法写入 /app/move.txt。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/chess-best-move"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "chess"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3c-chess-best-move-official-verifier",
+          "description": "验证 chess-best-move 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 棋盘图 chess_board.png 与 stockfish\nWHEN 按官方解法解析 FEN 并求最佳/将杀走法\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3c_tasks.py::test_round3c_task[chess-best-move]"
+        }
+      ]
+    },
+    {
+      "id": "wp-vulnerable-secret",
+      "name": "vulnerable-secret 评测任务",
+      "type": "Work Package",
+      "description": "利用缓冲区溢出覆盖 authenticated 标志，从 ./vulnerable 程序提取 secret key 并写入 /app/results.txt。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/vulnerable-secret"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "security"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3c-vulnerable-secret-official-verifier",
+          "description": "验证 vulnerable-secret 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 可被溢出的 ./vulnerable 程序\nWHEN 按官方解法发送覆盖 authenticated 标志的 payload\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3c_tasks.py::test_round3c_task[vulnerable-secret]"
+        }
+      ]
+    },
+    {
+      "id": "wp-large-scale-text-editing",
+      "name": "large-scale-text-editing 评测任务",
+      "type": "Work Package",
+      "description": "用 vim 宏对大文件批量文本编辑：清理逗号空格、字段反序、大写+分号+;OK 后缀。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/large-scale-text-editing"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "text"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3c-large-scale-text-editing-official-verifier",
+          "description": "验证 large-scale-text-editing 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 待批量编辑的大文本文件\nWHEN 按官方解法用 vim 宏执行清理/反序/大写编辑\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3c_tasks.py::test_round3c_task[large-scale-text-editing]"
+        }
+      ]
+    },
+    {
+      "id": "skill-git-multibranch",
+      "name": "git 多分支部署 Skill",
+      "type": "Skill",
+      "description": "搭建 git 多分支自动部署的标准化命令序列：git init --bare + post-receive hook 把 main/dev 分支部署到 /var/www/html 与 /var/www/dev，配置 SSH 与 nginx。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "git multibranch,multibranch,multi-branch,multi branch,branch deploy,post-receive hook,bare repo,deploy branch,git webhook"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/git-multibranch/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "curl -s http://localhost:8080 >/dev/null 2>&1; [ -f /var/www/html/index.html ] && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/git-multibranch/solve.sh"
+        }
+      ]
+    },
+    {
+      "id": "skill-nginx-request-logging",
+      "name": "nginx 请求日志与限流 Skill",
+      "type": "Skill",
+      "description": "配置 nginx 详细访问日志（log_format detailed）与限流（limit_req_zone 10r/s）、自定义 404 页、监听 8080 的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "nginx,request logging,access log,log_format,detailed log,rate limit,limit_req,404 page,benchmark webserver"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/nginx-request-logging/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "nginx -t && curl -s http://localhost:8080 >/dev/null && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/nginx-request-logging/solve.sh"
+        }
+      ]
+    },
+    {
+      "id": "skill-pypi-server",
+      "name": "本地 PyPI 服务 Skill",
+      "type": "Skill",
+      "description": "用 pypiserver 在 8080 搭建本地 PyPI 服务：htpasswd 认证（uploader/password）、创建构建 toy 包 vectorops 并 twine 上传的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "pypi server,pypiserver,local pypi,twine upload,py pi server,upload package,simple index"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/pypi-server/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "curl -s http://localhost:8080/simple/ >/dev/null && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/pypi-server/solve.sh"
+        }
+      ]
+    },
+    {
+      "id": "skill-build-cython-ext",
+      "name": "Cython 扩展编译 Skill",
+      "type": "Skill",
+      "description": "克隆 pyknotid 0.5.3，修补 numpy 弃用 API（gcd/np.float/np.complex/np.int），build_ext --inplace 编译 Cython 扩展并 pip install -e 的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "cython,build extension,pyknotid,build_ext,compile extension,numpy deprecation"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/build-cython-ext/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app/pyknotid && python -c 'import pyknotid' && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/build-cython-ext/solve.sh"
+        }
+      ]
+    },
+    {
+      "id": "skill-dna-insert",
+      "name": "DNA 引物设计 Skill",
+      "type": "Skill",
+      "description": "生信引物设计标准化命令序列：安装 emboss/primer3，用 needle 比对 input/output 序列，为 39bp 插入片段设计正反向引物写入 primers.fasta。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "dna,primer,primer3,emboss,needle,insert,sequences.fasta,oligotm,bioinformatics,forward primer,reverse primer"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/dna-insert/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "[ -f /app/primers.fasta ] && grep -q forward_primer /app/primers.fasta && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/dna-insert/solve.sh"
+        }
+      ]
+    },
+    {
+      "id": "skill-chess-best-move",
+      "name": "国际象棋最佳走法 Skill",
+      "type": "Skill",
+      "description": "解析棋盘图 chess_board.png 为 FEN（图像→FEN 转换），用 stockfish 求最佳/将杀走法并写入 /app/move.txt 的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "chess,stockfish,fen,chess_board,best move,mating move,checkmate,puzzle"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/chess-best-move/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "[ -s /app/move.txt ] && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/chess-best-move/solve.sh"
+        }
+      ]
+    },
+    {
+      "id": "skill-vulnerable-secret",
+      "name": "缓冲区溢出提取密钥 Skill",
+      "type": "Skill",
+      "description": "构造 payload 溢出 ./vulnerable 的缓冲区并覆盖 authenticated 标志，从输出提取 secret key 写入 /app/results.txt 的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "vulnerable,overflow,buffer,secret key,authenticated,payload,extract secret"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/vulnerable-secret/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "[ -s /app/results.txt ] && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/vulnerable-secret/solve.sh"
+        }
+      ]
+    },
+    {
+      "id": "skill-large-scale-text-editing",
+      "name": "vim 宏批量文本编辑 Skill",
+      "type": "Skill",
+      "description": "用 vim 宏（apply_macros.vim）对大文件批量文本编辑：清理逗号空格、字段反序、大写+分号+;OK 后缀的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "vim macro,text editing,large scale,bulk edit,macro,field order,uppercase,comma"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/large-scale-text-editing/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "grep -q ';OK' /app/*.txt 2>/dev/null && echo SKILL_VERIFY_OK"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/large-scale-text-editing/solve.sh"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -1566,6 +2062,86 @@
       "source_name": "开发者 Developer",
       "target_name": "largest-eigenval 评测任务",
       "statement": "开发者 Developer --(Assignment)--> largest-eigenval 评测任务"
+    },
+    {
+      "id": "rel-dev-git-multibranch",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "source_name": "开发者 Developer",
+      "target_id": "wp-git-multibranch",
+      "target_name": "git-multibranch 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> git-multibranch 评测任务"
+    },
+    {
+      "id": "rel-dev-nginx-request-logging",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "source_name": "开发者 Developer",
+      "target_id": "wp-nginx-request-logging",
+      "target_name": "nginx-request-logging 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> nginx-request-logging 评测任务"
+    },
+    {
+      "id": "rel-dev-pypi-server",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "source_name": "开发者 Developer",
+      "target_id": "wp-pypi-server",
+      "target_name": "pypi-server 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> pypi-server 评测任务"
+    },
+    {
+      "id": "rel-dev-build-cython-ext",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "source_name": "开发者 Developer",
+      "target_id": "wp-build-cython-ext",
+      "target_name": "build-cython-ext 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> build-cython-ext 评测任务"
+    },
+    {
+      "id": "rel-dev-dna-insert",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "source_name": "开发者 Developer",
+      "target_id": "wp-dna-insert",
+      "target_name": "dna-insert 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> dna-insert 评测任务"
+    },
+    {
+      "id": "rel-dev-chess-best-move",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "source_name": "开发者 Developer",
+      "target_id": "wp-chess-best-move",
+      "target_name": "chess-best-move 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> chess-best-move 评测任务"
+    },
+    {
+      "id": "rel-dev-vulnerable-secret",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "source_name": "开发者 Developer",
+      "target_id": "wp-vulnerable-secret",
+      "target_name": "vulnerable-secret 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> vulnerable-secret 评测任务"
+    },
+    {
+      "id": "rel-dev-large-scale-text-editing",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "source_name": "开发者 Developer",
+      "target_id": "wp-large-scale-text-editing",
+      "target_name": "large-scale-text-editing 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> large-scale-text-editing 评测任务"
     }
   ],
   "views": [
@@ -1716,6 +2292,50 @@
         "rel-dev-cobol",
         "rel-dev-db-wal",
         "rel-dev-eigenval"
+      ]
+    },
+    {
+      "view_id": "view-round3c-tasks",
+      "view_name": "Round 3c Tasks",
+      "parent_element_id": "1249",
+      "description": "Round-3c 扩展切片：8 个新增评测任务 Work Package（git-multibranch, nginx-request-logging, pypi-server, build-cython-ext, dna-insert, chess-best-move, vulnerable-secret, large-scale-text-editing），朝 k=20 扩大切片。",
+      "included_elements": [
+        "wp-git-multibranch",
+        "wp-nginx-request-logging",
+        "wp-pypi-server",
+        "wp-build-cython-ext",
+        "wp-dna-insert",
+        "wp-chess-best-move",
+        "wp-vulnerable-secret",
+        "wp-large-scale-text-editing",
+        "actor-developer"
+      ],
+      "included_relationships": [
+        "rel-dev-git-multibranch",
+        "rel-dev-nginx-request-logging",
+        "rel-dev-pypi-server",
+        "rel-dev-build-cython-ext",
+        "rel-dev-dna-insert",
+        "rel-dev-chess-best-move",
+        "rel-dev-vulnerable-secret",
+        "rel-dev-large-scale-text-editing"
+      ]
+    },
+    {
+      "view_id": "view-round3c-skills",
+      "view_name": "Round 3c Skills",
+      "parent_element_id": "1249",
+      "description": "Round-3c 扩展切片的 8 个蒸馏 Skill（git-multibranch, nginx-request-logging, pypi-server, build-cython-ext, dna-insert, chess-best-move, vulnerable-secret, large-scale-text-editing）。",
+      "included_relationships": [],
+      "included_elements": [
+        "skill-git-multibranch",
+        "skill-nginx-request-logging",
+        "skill-pypi-server",
+        "skill-build-cython-ext",
+        "skill-dna-insert",
+        "skill-chess-best-move",
+        "skill-vulnerable-secret",
+        "skill-large-scale-text-editing"
       ]
     }
   ]
