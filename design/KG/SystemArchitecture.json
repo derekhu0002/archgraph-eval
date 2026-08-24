@@ -930,6 +930,166 @@
           "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[largest-eigenval]"
         }
       ]
+    },
+    {
+      "id": "skill-sanitize-git-repo",
+      "name": "git 密钥清理 Skill",
+      "type": "Skill",
+      "description": "用 grep/sed 把仓库中的 AWS/github/hf 密钥替换为占位符的标准化命令序列。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "sanitize,api keys,aws access key,github token,huggingface token,clean repo,remove keys"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/sanitize-git-repo/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && (grep -rE 'AKIA[0-9A-Z]{16}' /app 2>/dev/null | grep -v placeholder || true) && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-regex-log",
+      "name": "日志日期 IPv4 正则 Skill",
+      "type": "Skill",
+      "description": "编写匹配含 IPv4 行中最后一个 YYYY-MM-DD 日期的正则并写入 /app/regex.txt。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "regex,ipv4,date,log file,match dates,yyyy-mm-dd"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/regex-log/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && [ -f regex.txt ] && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-log-summary-date-ranges",
+      "name": "日志 severity 日期范围统计 Skill",
+      "type": "Skill",
+      "description": "统计日志文件在 Today/7天/30天/当月/全部 范围的 ERROR/WARNING/INFO 计数并输出 summary.csv。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "log files,severity,date ranges,summary.csv,error warning info,count how many times"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/log-summary-date-ranges/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && [ -f summary.csv ] && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-filter-js-from-html",
+      "name": "HTML 去 JS 防 XSS Skill",
+      "type": "Skill",
+      "description": "用 BeautifulSoup 移除 HTML 中所有 JavaScript（script/iframe/on* 属性）并原位修改、保留结构。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "filter.py,javascript,xss,remove javascript,html,script tags"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/filter-js-from-html/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && [ -f filter.py ] && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-overfull-hbox",
+      "name": "LaTeX overfull hbox 修复 Skill",
+      "type": "Skill",
+      "description": "用同义词替换 input.tex 中的词，使 pdflatex 编译无 overfull hbox 警告。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "overfull hbox,latex,pdflatex,synonyms,compile,tex"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/overfull-hbox/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && (grep -c 'Overfull' main.log 2>/dev/null || true) && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-cobol-modernization",
+      "name": "COBOL 转 Python Skill",
+      "type": "Skill",
+      "description": "把 GnuCOBOL 程序逻辑用 Python 重写，产出完全一致的 .DAT 文件。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "cobol,gnucobol,re-implement,python,program.cbl,modernization"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/cobol-modernization/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && [ -f program.py ] && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-db-wal-recovery",
+      "name": "SQLite WAL 修复 Skill",
+      "type": "Skill",
+      "description": "用 XOR 解密修复被加密/损坏的 SQLite WAL 文件并恢复全部记录。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "wal,write-ahead,corrupted database,sqlite,recover records,main.db"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/db-wal-recovery/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && sqlite3 main.db 'SELECT COUNT(*) FROM items;' && echo SKILL_VERIFY_OK"
+        }
+      ]
+    },
+    {
+      "id": "skill-largest-eigenval",
+      "name": "最大模特征值 Skill",
+      "type": "Skill",
+      "description": "用 eigenpy 快速实现最大模特征值/特征向量，满足精度且快于 numpy。",
+      "attributes": [
+        {
+          "name": "trigger_patterns",
+          "value": "eigenvalue,eigenvector,dominant,numpy,eigen.py,largest"
+        },
+        {
+          "name": "plan_path",
+          "value": "scripts/solutions/largest-eigenval/solve.sh"
+        },
+        {
+          "name": "verify_command",
+          "value": "cd /app && python -c 'import eigen; print(\"eigen OK\")' && echo SKILL_VERIFY_OK"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -1196,7 +1356,15 @@
         "skill-crack-7z-hash",
         "skill-count-dataset-tokens",
         "skill-sqlite-db-truncate",
-        "skill-fix-git"
+        "skill-fix-git",
+        "skill-sanitize-git-repo",
+        "skill-regex-log",
+        "skill-log-summary-date-ranges",
+        "skill-filter-js-from-html",
+        "skill-overfull-hbox",
+        "skill-cobol-modernization",
+        "skill-db-wal-recovery",
+        "skill-largest-eigenval"
       ],
       "included_relationships": []
     },
