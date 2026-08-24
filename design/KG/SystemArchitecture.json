@@ -1635,7 +1635,7 @@
       "attributes": [
         {
           "name": "trigger_patterns",
-          "value": "git multibranch,multibranch,multi-branch,multi branch,branch deploy,post-receive hook,bare repo,deploy branch,git webhook"
+          "value": "git server,git multibranch,multibranch,multi-branch,multi branch,branch deploy,deploy contents,deploy from,post-receive hook,bare repo,deploy branch,git webhook,git@localhost,two branches,main and dev,https endpoint,deployment,hosts a project"
         },
         {
           "name": "plan_path",
@@ -1643,7 +1643,7 @@
         },
         {
           "name": "verify_command",
-          "value": "curl -s http://localhost:8080 >/dev/null 2>&1; [ -f /var/www/html/index.html ] && echo SKILL_VERIFY_OK"
+          "value": "curl -sk https://localhost:8443/index.html >/dev/null 2>&1; [ -f /var/www/html/index.html ] && echo SKILL_VERIFY_OK"
         },
         {
           "name": "commit",
@@ -1651,7 +1651,7 @@
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/git-multibranch/solve.sh"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     },
@@ -1691,7 +1691,7 @@
       "attributes": [
         {
           "name": "trigger_patterns",
-          "value": "pypi server,pypiserver,local pypi,twine upload,py pi server,upload package,simple index"
+          "value": "pypi server,pypiserver,local pypi,twine upload,py pi server,upload package,simple index,index-url,vectorops,dotproduct,install the package,hosts this package,port 8080"
         },
         {
           "name": "plan_path",
@@ -1707,7 +1707,7 @@
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/pypi-server/solve.sh"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     },
@@ -1803,7 +1803,7 @@
       "attributes": [
         {
           "name": "trigger_patterns",
-          "value": "vulnerable,overflow,buffer,secret key,authenticated,payload,extract secret"
+          "value": "vulnerable,overflow,buffer,secret key,authenticated,payload,extract secret,analyze the program,results.txt,secret information,contains a secret"
         },
         {
           "name": "plan_path",
@@ -1811,7 +1811,7 @@
         },
         {
           "name": "verify_command",
-          "value": "[ -s /app/results.txt ] && echo SKILL_VERIFY_OK"
+          "value": "[ -s /app/results.txt ] && grep -q FLAG /app/results.txt && echo SKILL_VERIFY_OK"
         },
         {
           "name": "commit",
@@ -1819,7 +1819,7 @@
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/vulnerable-secret/solve.sh"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     },
