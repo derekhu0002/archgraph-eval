@@ -867,6 +867,14 @@
         {
           "name": "limitation",
           "value": "skill produced /app/filter.py; verifier downloaded uv/selenium then stalled on selenium browser for pytest (no CPU growth ~15min) — infra/network, not skill"
+        },
+        {
+          "name": "commit",
+          "value": "177cee5"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
