@@ -1343,7 +1343,31 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved_infra"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3c",
+          "value": "2"
+        },
+        {
+          "name": "skill_fix",
+          "value": "retriggered with correct skill (broadened triggers: git server/deploy contents/git@localhost); first run wrongly matched openssl (self-signed cert in instruction) → fixed commit 4646dd0"
+        },
+        {
+          "name": "limitation",
+          "value": "verifier failed: uv download from astral.sh SSL_ERROR_SYSCALL + apt 502 (network infra) — skill executed correctly (git server + nginx deployment)"
+        },
+        {
+          "name": "commit",
+          "value": "4646dd0"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
@@ -1429,7 +1453,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved_infra"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3c",
+          "value": "attempted"
+        },
+        {
+          "name": "limitation",
+          "value": "verifier failed: uv download from github.com/astral-sh/uv failed (network) + deb.debian.org 502 — infra, not skill (pypi-server skill ran)"
+        },
+        {
+          "name": "commit",
+          "value": "4646dd0"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
@@ -1614,7 +1658,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved_infra"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3c",
+          "value": "attempted"
+        },
+        {
+          "name": "limitation",
+          "value": "verifier failed: apt 502 on deb.debian.org (curl etc.) + uvx unavailable (network infra) — skill ran (vim macros, ;OK verify)"
+        },
+        {
+          "name": "commit",
+          "value": "4646dd0"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
