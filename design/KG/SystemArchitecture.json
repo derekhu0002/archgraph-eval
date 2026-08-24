@@ -1376,7 +1376,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved_infra"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3c",
+          "value": "attempted"
+        },
+        {
+          "name": "limitation",
+          "value": "skill succeeded (apt nginx + config + nginx -t + curl verify OK) but verifier failed: uv download from releases.astral.sh SSL_ERROR_SYSCALL (network) — infra, not skill"
+        },
+        {
+          "name": "commit",
+          "value": "73b1113"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
         }
       ],
       "testcases": [
@@ -1475,7 +1495,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved_infra"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3c",
+          "value": "attempted"
+        },
+        {
+          "name": "limitation",
+          "value": "verifier failed: apt 502 Bad Gateway on archive.ubuntu.com + uvx/curl missing (network infra); skill ran (primers.fasta verify) — infra, not skill logic"
+        },
+        {
+          "name": "commit",
+          "value": "73b1113"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
         }
       ],
       "testcases": [
