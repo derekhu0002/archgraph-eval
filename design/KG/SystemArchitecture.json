@@ -2019,15 +2019,15 @@
       "id": "dev-mem-round3c",
       "name": "Round3c 切片评测记录",
       "type": "Deliverable",
-      "description": "2026-08-24 开发者 Actor 完成 Round 3c（8 任务切片）：网络恢复后 8/8 评测全部 reward=1.0（git-multibranch/nginx/pypi-server/build-cython-ext/dna-insert/chess-best-move/vulnerable-secret/large-scale-text-editing），验收套件 8/8 通过。真实 skill 修复：(1) pypi-server setsid 存活 harbor compose exec bg 进程（nohup 被杀）+ apt/pip/twine 502 重试；(2) build-cython-ext planarity>=1.0 改名 embedding 属性致 pyknotid 0.5.3 KeyError 'pos'，python heredoc 补丁恢复旧名；(3) chess-best-move 网络重试。验收 harness 修复（tests/test_round3c_tasks.py）：用我们的 skill 而非损坏的数据集参考（build-cython-ext 参考缺 planarity 补丁）；tests 复制到 /tests（官方约定，large-scale-text-editing verifier 硬编码 /tests/gen_large_csv.py）；pytest 只跑一次且用控制台脚本 pytest（python -m pytest CWD=/app 会把 /app/pyknotid 当 namespace 包致 test_pyknotid_core_import 失败）。commit 4fb36ab（评测+harness 修复）与 d1c2f13（图谱登记，8 WP+8 skill commit 属性）。",
+      "description": "2026-08-24~25 开发者 Actor 完成 Round 3c（8 任务切片）并收尾：网络恢复后全部 22 个图谱 WP 达到 reward=1.0（19 个 round3c 前 + regex-log/db-wal-recovery/overfull-hbox 3 个未完成项于 2026-08-25 全部解决）。真实 skill 修复：(1) pypi-server setsid 存活 harbor compose exec bg 进程 + apt/pip/twine 502 重试；(2) build-cython-ext planarity>=1.0 改名 embedding 属性致 pyknotid KeyError 'pos'，python heredoc 补丁恢复旧名；(3) chess-best-move 网络重试。验收 harness 修复（tests/test_round3c_tasks.py）：用我们的 skill 而非损坏的数据集参考；tests 复制到 /tests；pytest 只跑一次且用控制台脚本 pytest（python -m pytest CWD=/app 会把 /app/pyknotid 当 namespace 包致 test_pyknotid_core_import 失败）。未完成项根因：regex-log/db-wal 是 verifier uv 网络超时（网络恢复即过），overfull-hbox 是 1-CPU 计算受限需 ARCHGRAPH_CMD_TIMEOUT=1800 + --agent-timeout-multiplier 3（提交前需核查 'no modifying timeouts' 合规）。commit 4fb36ab（round3c 评测+harness）、3ede445（22/22 收尾）。",
       "attributes": [
         {
           "name": "commit",
-          "value": "4fb36ab"
+          "value": "3ede445"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, scripts/solutions/pypi-server/solve.sh, scripts/solutions/build-cython-ext/solve.sh, scripts/solutions/chess-best-move/solve.sh, tests/test_round3c_tasks.py"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ]
     }
