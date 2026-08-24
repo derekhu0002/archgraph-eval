@@ -49,9 +49,11 @@ class ArchGraphAgent(BaseAgent):
     MAX_ROUNDS = 12
 
     #: Timeout (seconds) for each sandbox command. Skill scripts can install
-    #: deps / download datasets / run long tools (e.g. john), so keep this well
-    #: under the 900s task agent timeout but large enough for those workloads.
-    CMD_TIMEOUT = 600.0
+    #: deps / download datasets / run long tools (e.g. john, pdflatex), so keep
+    #: this under the task agent timeout but large enough for those workloads.
+    #: Overridable via ARCHGRAPH_CMD_TIMEOUT (e.g. a task with a 750s agent
+    #: timeout may need ~700s for its skill script).
+    CMD_TIMEOUT = float(os.environ.get("ARCHGRAPH_CMD_TIMEOUT", "600"))
 
     @staticmethod
     def name() -> str:
