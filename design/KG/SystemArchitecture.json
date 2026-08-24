@@ -27,6 +27,10 @@
         {
           "view_id": "174",
           "view_name": "Implementation and Migration"
+        },
+        {
+          "view_id": "view-round3-tasks",
+          "view_name": "Round 3 Tasks"
         }
       ]
     },
@@ -662,6 +666,270 @@
           "value": "design/KG/SystemArchitecture.json"
         }
       ]
+    },
+    {
+      "id": "wp-sanitize-git-repo",
+      "name": "sanitize-git-repo 评测任务",
+      "type": "Work Package",
+      "description": "清理 github 仓库 dclm 中的 API keys：把 AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY/github token/hf token 替换为占位符。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/sanitize-git-repo"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "security"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3-sanitize-git-repo-official-verifier",
+          "description": "验证 sanitize-git-repo 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 含泄漏密钥的 git 仓库 dclm\nWHEN 用 grep/sed 把密钥替换为占位符\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[sanitize-git-repo]"
+        }
+      ]
+    },
+    {
+      "id": "wp-regex-log",
+      "name": "regex-log 评测任务",
+      "type": "Work Package",
+      "description": "编写匹配含 IPv4 行中 YYYY-MM-DD 日期（仅最后一个）的正则，写入 /app/regex.txt，避免误匹配。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/regex-log"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "data"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3-regex-log-official-verifier",
+          "description": "验证 regex-log 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 日志文件\nWHEN 写出匹配含 IPv4 行最后一个 YYYY-MM-DD 日期的正则到 /app/regex.txt\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[regex-log]"
+        }
+      ]
+    },
+    {
+      "id": "wp-log-summary-date-ranges",
+      "name": "log-summary-date-ranges 评测任务",
+      "type": "Work Package",
+      "description": "统计 /app/logs 各日志文件在 Today/7天/30天/当月/全部 范围内 ERROR/WARNING/INFO 出现次数，输出 /app/summary.csv。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/log-summary-date-ranges"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "data"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3-log-summary-date-ranges-official-verifier",
+          "description": "验证 log-summary-date-ranges 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN /app/logs 下的日志文件\nWHEN 统计各 severity 在多个日期范围的计数并写 /app/summary.csv\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[log-summary-date-ranges]"
+        }
+      ]
+    },
+    {
+      "id": "wp-filter-js-from-html",
+      "name": "filter-js-from-html 评测任务",
+      "type": "Work Package",
+      "description": "写 /app/filter.py：用 BeautifulSoup 移除 HTML 中所有 JavaScript（script/iframe/on* 属性等），原位修改并保留结构。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/filter-js-from-html"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "security"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3-filter-js-from-html-official-verifier",
+          "description": "验证 filter-js-from-html 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN HTML 文件\nWHEN /app/filter.py 原位移除所有 JS 并保留结构\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[filter-js-from-html]"
+        }
+      ]
+    },
+    {
+      "id": "wp-overfull-hbox",
+      "name": "overfull-hbox 评测任务",
+      "type": "Work Package",
+      "description": "用 synonyms.txt 中的同义词替换 input.tex 词语，使 main.tex 用 pdflatex 编译无 overfull hbox 警告。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/overfull-hbox"
+        },
+        {
+          "name": "difficulty",
+          "value": "easy"
+        },
+        {
+          "name": "family",
+          "value": "debugging"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3-overfull-hbox-official-verifier",
+          "description": "验证 overfull-hbox 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN LaTeX 文档\nWHEN 用同义词替换 input.tex 中的词使编译无 overfull hbox\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[overfull-hbox]"
+        }
+      ]
+    },
+    {
+      "id": "wp-cobol-modernization",
+      "name": "cobol-modernization 评测任务",
+      "type": "Work Package",
+      "description": "把 GnuCOBOL 程序 /app/src/program.cbl 的功能用 Python 重写为 /app/program.py，产出与 COBOL 完全一致的 .DAT 文件。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/cobol-modernization"
+        },
+        {
+          "name": "difficulty",
+          "value": "easy"
+        },
+        {
+          "name": "family",
+          "value": "software"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3-cobol-modernization-official-verifier",
+          "description": "验证 cobol-modernization 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN COBOL 程序与数据\nWHEN 用 Python 重写相同逻辑并产出相同 .DAT 文件\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[cobol-modernization]"
+        }
+      ]
+    },
+    {
+      "id": "wp-db-wal-recovery",
+      "name": "db-wal-recovery 评测任务",
+      "type": "Work Package",
+      "description": "修复被 XOR 加密的 SQLite WAL 文件，恢复全部 11 条记录。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/db-wal-recovery"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "sql"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3-db-wal-recovery-official-verifier",
+          "description": "验证 db-wal-recovery 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN 损坏/加密的 SQLite WAL\nWHEN 修复 WAL 并提取全部记录\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[db-wal-recovery]"
+        }
+      ]
+    },
+    {
+      "id": "wp-largest-eigenval",
+      "name": "largest-eigenval 评测任务",
+      "type": "Work Package",
+      "description": "实现 /app/eigen.py 中 find_dominant_eigenvalue_and_eigenvector：求最大模特征值/向量，且快于 numpy 参考实现。",
+      "attributes": [
+        {
+          "name": "task_id",
+          "value": "terminal-bench/largest-eigenval"
+        },
+        {
+          "name": "difficulty",
+          "value": "medium"
+        },
+        {
+          "name": "family",
+          "value": "math"
+        },
+        {
+          "name": "status",
+          "value": "planned"
+        }
+      ],
+      "testcases": [
+        {
+          "name": "r3-largest-eigenval-official-verifier",
+          "description": "验证 largest-eigenval 官方验证器通过（reward=1）。",
+          "type": "Acceptance Test",
+          "Input": "GIVEN /app/eigen.py 待实现函数\nWHEN 实现最大模特征值/向量且满足精度与速度\nTHEN 官方验证器 test_outputs.py 通过，reward=1",
+          "acceptanceCriteria": "tests/test_round3_tasks.py::test_round3_task[largest-eigenval]"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -834,6 +1102,86 @@
       "source_name": "git reflog 丢失提交恢复 Skill",
       "target_name": "fix-git 评测任务",
       "statement": "git reflog 丢失提交恢复 Skill --(Association)--> fix-git 评测任务"
+    },
+    {
+      "id": "rel-dev-sanitize",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-sanitize-git-repo",
+      "source_name": "开发者 Developer",
+      "target_name": "sanitize-git-repo 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> sanitize-git-repo 评测任务"
+    },
+    {
+      "id": "rel-dev-regex-log",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-regex-log",
+      "source_name": "开发者 Developer",
+      "target_name": "regex-log 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> regex-log 评测任务"
+    },
+    {
+      "id": "rel-dev-log-summary",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-log-summary-date-ranges",
+      "source_name": "开发者 Developer",
+      "target_name": "log-summary-date-ranges 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> log-summary-date-ranges 评测任务"
+    },
+    {
+      "id": "rel-dev-filter-js",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-filter-js-from-html",
+      "source_name": "开发者 Developer",
+      "target_name": "filter-js-from-html 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> filter-js-from-html 评测任务"
+    },
+    {
+      "id": "rel-dev-overfull",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-overfull-hbox",
+      "source_name": "开发者 Developer",
+      "target_name": "overfull-hbox 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> overfull-hbox 评测任务"
+    },
+    {
+      "id": "rel-dev-cobol",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-cobol-modernization",
+      "source_name": "开发者 Developer",
+      "target_name": "cobol-modernization 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> cobol-modernization 评测任务"
+    },
+    {
+      "id": "rel-dev-db-wal",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-db-wal-recovery",
+      "source_name": "开发者 Developer",
+      "target_name": "db-wal-recovery 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> db-wal-recovery 评测任务"
+    },
+    {
+      "id": "rel-dev-eigenval",
+      "name": "Assignment",
+      "type": "Assignment",
+      "source_id": "actor-developer",
+      "target_id": "wp-largest-eigenval",
+      "source_name": "开发者 Developer",
+      "target_name": "largest-eigenval 评测任务",
+      "statement": "开发者 Developer --(Assignment)--> largest-eigenval 评测任务"
     }
   ],
   "views": [
@@ -947,6 +1295,33 @@
         "actor-reviewer"
       ],
       "included_relationships": []
+    },
+    {
+      "view_id": "view-round3-tasks",
+      "view_name": "Round 3 Tasks",
+      "parent_element_id": "1249",
+      "description": "Round-3 扩展切片：8 个新增评测任务 Work Package（sanitize-git-repo, regex-log, log-summary-date-ranges, filter-js-from-html, overfull-hbox, cobol-modernization, db-wal-recovery, largest-eigenval）。",
+      "included_elements": [
+        "wp-sanitize-git-repo",
+        "wp-regex-log",
+        "wp-log-summary-date-ranges",
+        "wp-filter-js-from-html",
+        "wp-overfull-hbox",
+        "wp-cobol-modernization",
+        "wp-db-wal-recovery",
+        "wp-largest-eigenval",
+        "actor-developer"
+      ],
+      "included_relationships": [
+        "rel-dev-sanitize",
+        "rel-dev-regex-log",
+        "rel-dev-log-summary",
+        "rel-dev-filter-js",
+        "rel-dev-overfull",
+        "rel-dev-cobol",
+        "rel-dev-db-wal",
+        "rel-dev-eigenval"
+      ]
     }
   ]
 }
