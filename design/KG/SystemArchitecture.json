@@ -850,11 +850,11 @@
         },
         {
           "name": "status",
-          "value": "unresolved_infra"
+          "value": "completed"
         },
         {
           "name": "reward",
-          "value": "0"
+          "value": "1.0"
         },
         {
           "name": "round3",
@@ -862,11 +862,11 @@
         },
         {
           "name": "round3b",
-          "value": "errored"
+          "value": "1"
         },
         {
-          "name": "limitation",
-          "value": "skill produced /app/filter.py; verifier downloaded uv/selenium then stalled on selenium browser for pytest (no CPU growth ~15min) — infra/network, not skill"
+          "name": "note",
+          "value": "skill wrote /app/filter.py; verifier took ~30min downloading uv/cpython/selenium/chrome on slow network then passed"
         },
         {
           "name": "commit",
@@ -1029,15 +1029,15 @@
         },
         {
           "name": "round3b",
-          "value": "errored"
+          "value": "2"
         },
         {
           "name": "limitation",
-          "value": "env-build timeout (image pull stalled >30min on slow network) — infra"
+          "value": "agent completed skill+verify (sqlite count OK) but verifier timed out downloading uv (VerifierTimeoutError, 15m18s run) — infra/network, not skill"
         },
         {
           "name": "commit",
-          "value": "df58dcc"
+          "value": "0d2cda1"
         },
         {
           "name": "commit_files",

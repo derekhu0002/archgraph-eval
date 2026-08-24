@@ -30,6 +30,15 @@ ROUND3_TASKS = [
     ("largest-eigenval", "alexgshaw/largest-eigenval:20251031"),
 ]
 
+# Verifiers that import third-party packages not preinstalled in the task image.
+# The acceptance test installs these (harbor runs the verifier in a dedicated
+# verifier container that preinstalls the same set).
+VERIFIER_DEPS = {
+    "largest-eigenval": ["numpy"],
+    "sanitize-git-repo": ["gitpython"],
+    "filter-js-from-html": ["beautifulsoup4", "selenium"],
+}
+
 TIMEOUT = 600
 
 
@@ -83,9 +92,23 @@ def test_round3_task(task_dir: str, image: str):
               "python3 -m pip install --break-system-packages -q pytest==8.4.1 2>/dev/null || "
               "(export DEBIAN_FRONTEND=noninteractive && apt-get install -y python3-pip && python3 -m pip install --break-system-packages -q pytest==8.4.1)",
               check=False)
-        verifier_text = verifier.read_text(encoding="utf-8")
-        _exec(container, f"cat > /tmp/test_outputs.py << 'PYEOF'\n{verifier_text}\nPYEOF", check=False)
-        result = _exec(container, "cd /app && (python -m pytest /tmp/test_outputs.py -q 2>/dev/null || python3 -m pytest /tmp/test_outputs.py -q)", check=False)
+        # Install verifier deps that are not preinstalled in the task image
+        # (mirrors harbor's dedicated verifier container).
+        deps = VERIFIER_DEPS.get(task_dir)
+        if deps:
+            _exec(container,
+                  "python -m pip install --break-system-packages -q " + " ".join(deps) +
+                  " 2>/dev/null || python3 -m pip install --break-system-packages -q " + " ".join(deps),
+                  check=False)
+        # Copy the WHOLE tests/ directory so verifiers can read sibling
+        # reference data files (e.g. sanitize-git-repo reads tests/ray_cluster.yaml
+        # via Path(__file__).parent) — mirrors how harbor mounts the verifier dir.
+        subprocess.run(["docker", "exec", container, "mkdir", "-p", "/tmp/tests"],
+                       capture_output=True, check=False)
+        cp = subprocess.run(["docker", "cp", f"{task_root / 'tests'}/.", f"{container}:/tmp/tests/"],
+                            capture_output=True, text=True, timeout=TIMEOUT)
+        assert cp.returncode == 0, f"docker cp tests dir failed: {cp.stderr}"
+        result = _exec(container, "cd /app && (python -m pytest /tmp/tests/test_outputs.py -q 2>/dev/null || python3 -m pytest /tmp/tests/test_outputs.py -q)", check=False)
 
         evidence_dir = REPO_ROOT / ".argo" / "temp" / "acceptance" / task_dir
         evidence_dir.mkdir(parents=True, exist_ok=True)
