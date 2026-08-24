@@ -687,7 +687,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round3",
+          "value": "0"
+        },
+        {
+          "name": "round3b",
+          "value": "1"
+        },
+        {
+          "name": "commit",
+          "value": "df58dcc"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, harbor_agents/archgraph_agent.py"
         }
       ],
       "testcases": [
@@ -720,7 +740,31 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved_infra"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3",
+          "value": "0"
+        },
+        {
+          "name": "round3b",
+          "value": "errored"
+        },
+        {
+          "name": "limitation",
+          "value": "skill produced /app/regex.txt but verifier timed out downloading uv/cpython (network) — infra, not skill"
+        },
+        {
+          "name": "commit",
+          "value": "df58dcc"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
@@ -949,7 +993,31 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved_infra"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3",
+          "value": "0"
+        },
+        {
+          "name": "round3b",
+          "value": "errored"
+        },
+        {
+          "name": "limitation",
+          "value": "env-build timeout (image pull stalled >30min on slow network) — infra"
+        },
+        {
+          "name": "commit",
+          "value": "df58dcc"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
