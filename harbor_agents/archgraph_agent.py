@@ -73,20 +73,27 @@ class ArchGraphAgent(BaseAgent):
     # ------------------------------------------------------------------ #
     @staticmethod
     def _match_skill(instruction: str) -> dict | None:
-        """Best-effort local skill registry.
+        """Best-match skill lookup (not first-match).
 
-        In the full ARCHGRAPH harness this reads Skills from the intent graph
-        (design/KG/SystemArchitecture.json). The openssl-selfsigned-cert skill
-        is distilled during Round-0 bootstrap; more skills get added as rounds
-        progress.
+        First-match substring lookup lets a generic pattern from an earlier
+        skill shadow a more specific later skill (e.g. "compile" in an overfull
+        skill matching a COBOL instruction). Instead, score every skill by the
+        number of matched trigger patterns plus their total length (specificity)
+        and return the highest-scoring match.
         """
         skills = ArchGraphAgent._load_graph_skills()
         text = instruction.lower()
+        best: dict | None = None
+        best_score = 0
         for skill in skills:
-            for pattern in skill.get("patterns", []):
-                if pattern in text:
-                    return skill
-        return None
+            matched = [p for p in skill.get("patterns", []) if p in text]
+            if not matched:
+                continue
+            score = len(matched) * 100 + sum(len(p) for p in matched)
+            if score > best_score:
+                best_score = score
+                best = skill
+        return best
 
     @staticmethod
     def _load_graph_skills() -> list[dict]:
