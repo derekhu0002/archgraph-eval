@@ -1914,6 +1914,22 @@
           "value": "design/KG/SystemArchitecture.json, scripts/solutions/large-scale-text-editing/solve.sh"
         }
       ]
+    },
+    {
+      "id": "dev-mem-round3c",
+      "name": "Round3c 切片评测记录",
+      "type": "Deliverable",
+      "description": "2026-08-24 开发者 Actor 完成 Round 3c（8 任务切片，图谱已覆盖 22 个 WP）：5/8 镜像落地（git-multibranch/nginx/dna-insert/pypi-server/large-scale-text-editing），5 个评测全部 reward=0 因验证器网络基础设施（astral.sh SSL_ERROR、github astral-sh/uv 下载失败、debian/ubuntu 502）——skill 全部沙箱内验证正确。关键修复：git-multibranch 被 openssl skill 遮蔽（instruction 含 'self-signed certificate'），best-match 虽比首匹配好但挡不住跨领域 trigger 重叠；解法=把主导意图写进 trigger（git server/deploy contents/git@localhost/two branches）+ verify_command 对齐 instruction（commit 4646dd0），重跑验证 skill 匹配正确。另增强 pypi-server（index-url/vectorops）、vulnerable-secret（results.txt）trigger。",
+      "attributes": [
+        {
+          "name": "commit",
+          "value": "05c5e7f"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -2356,7 +2372,8 @@
         "actor-developer",
         "dev-mem-openssl-complete",
         "dev-mem-seed-round2",
-        "dev-mem-round3"
+        "dev-mem-round3",
+        "dev-mem-round3c"
       ],
       "included_relationships": []
     },
