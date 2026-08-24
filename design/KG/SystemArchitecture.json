@@ -1266,6 +1266,54 @@
           "value": "cd /app && python -c 'import eigen; print(\"eigen OK\")' && echo SKILL_VERIFY_OK"
         }
       ]
+    },
+    {
+      "id": "dev-mem-round3",
+      "name": "Round3 扩展切片 8 任务结果记录",
+      "type": "Deliverable",
+      "description": "2026-08-24 开发者 Actor 完成 Round 3（扩展切片 8 任务）：图谱 Skill 确定性 resolve 5/8（cobol-modernization=1, largest-eigenval=1, log-summary-date-ranges=1, sanitize-git-repo=1, filter-js-from-html=1）；未 resolve 3（overfull-hbox=0 计算受限 pdflatex>750s；regex-log+db-wal=VerifierTimeoutError uv 下载超时=基础设施）。关键修复：skill 匹配改 best-match（df58dcc, cobol/eigenval 0→1）、CMD_TIMEOUT 环境可配（8931fe6）、验收测试加固 VERIFIER_DEPS+整目录复制（e053424）。验收套件 5/8 通过、3 个网络基础设施失败。",
+      "attributes": [
+        {
+          "name": "commit",
+          "value": "e053424"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3_tasks.py"
+        }
+      ]
+    },
+    {
+      "id": "rev-mem-round3",
+      "name": "Round3 验收回归评审记录",
+      "type": "Deliverable",
+      "description": "2026-08-24 评审员 Actor 对 Round 3 验收回归：tests/test_round3_tasks.py 加固后 8 任务验收 5 通过（sanitize/log-summary/filter-js/cobol/db-wal）、3 失败均为网络基础设施（regex-log apt 装 python3 超时、overfull apt/pip 超时、largest-eigenval 官方解法 pip install eigenpy 超时），非 skill/解法/verifier 逻辑问题。harbor 端 5/8 resolve（filter-js 本轮补确认 reward=1；db-wal 重跑仍 VerifierTimeoutError=基础设施）。放行：图 WP 状态与 commit 登记一致（e053424/99bb433），validateSystemArchitecture 通过。",
+      "attributes": [
+        {
+          "name": "commit",
+          "value": "99bb433"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
+        }
+      ]
+    },
+    {
+      "id": "arch-mem-round3",
+      "name": "Round3 架构决策记录",
+      "type": "Deliverable",
+      "description": "2026-08-24 架构设计师 Actor Round 3 决策：1) Skill 匹配必须 best-match 评分（命中模式数*100+模式总长取最高），杜绝首匹配子串遮蔽（cobol↔overfull 'compile'、eigenval↔cobol 'python'）——df58dcc；2) 命令超时 CMD_TIMEOUT 环境可配（ARCHGRAPH_CMD_TIMEOUT，默认 600）以适配 750s/900s agent 超时差异——8931fe6；3) 验收测试对 verifier 第三方依赖用 VERIFIER_DEPS 映射、对兄弟数据文件整目录复制（sanitize/filter-js 依赖 Path(__file__).parent 参考文件）——e053424；4) 被否方案：逐文件 cat verifier（兄弟文件缺失）、首匹配子串（遮蔽）。",
+      "attributes": [
+        {
+          "name": "commit",
+          "value": "e053424"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3_tasks.py"
+        }
+      ]
     }
   ],
   "relationships": [
@@ -1614,7 +1662,8 @@
       "parent_element_id": "actor-architect",
       "description": "架构设计师 Actor 的长期记忆 SUBVIEW 层级：历史工作信息、架构决策、验收用例、Skill/Rule 记录。",
       "included_elements": [
-        "actor-architect"
+        "actor-architect",
+        "arch-mem-round3"
       ],
       "included_relationships": []
     },
@@ -1626,7 +1675,8 @@
       "included_elements": [
         "actor-developer",
         "dev-mem-openssl-complete",
-        "dev-mem-seed-round2"
+        "dev-mem-seed-round2",
+        "dev-mem-round3"
       ],
       "included_relationships": []
     },
@@ -1636,7 +1686,8 @@
       "parent_element_id": "actor-reviewer",
       "description": "评审员 Actor 的长期记忆 SUBVIEW 层级：评审结论、回归结果、放行/打回记录。",
       "included_elements": [
-        "actor-reviewer"
+        "actor-reviewer",
+        "rev-mem-round3"
       ],
       "included_relationships": []
     },
