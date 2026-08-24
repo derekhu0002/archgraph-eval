@@ -866,15 +866,15 @@
         },
         {
           "name": "note",
-          "value": "skill wrote /app/filter.py; verifier took ~30min downloading uv/cpython/selenium/chrome on slow network then passed"
+          "value": "skill wrote /app/filter.py; verifier took ~30min downloading uv/cpython/selenium/chrome on slow network then passed; acceptance PASSED"
         },
         {
           "name": "commit",
-          "value": "177cee5"
+          "value": "e053424"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3_tasks.py"
         }
       ],
       "testcases": [
@@ -1033,15 +1033,15 @@
         },
         {
           "name": "limitation",
-          "value": "agent completed skill+verify (sqlite count OK) but verifier timed out downloading uv (VerifierTimeoutError, 15m18s run) — infra/network, not skill"
+          "value": "agent completed skill+verify (sqlite count OK) but verifier timed out downloading uv (VerifierTimeoutError) — infra/network; acceptance (official solution, direct pytest) PASSED proving reward=1 achievable"
         },
         {
           "name": "commit",
-          "value": "0d2cda1"
+          "value": "e053424"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, tests/test_round3_tasks.py"
         }
       ],
       "testcases": [
