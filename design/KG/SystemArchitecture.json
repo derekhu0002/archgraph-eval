@@ -850,7 +850,23 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "unresolved_infra"
+        },
+        {
+          "name": "reward",
+          "value": "0"
+        },
+        {
+          "name": "round3",
+          "value": "0"
+        },
+        {
+          "name": "round3b",
+          "value": "errored"
+        },
+        {
+          "name": "limitation",
+          "value": "skill produced /app/filter.py; verifier downloaded uv/selenium then stalled on selenium browser for pytest (no CPU growth ~15min) — infra/network, not skill"
         }
       ],
       "testcases": [
