@@ -8,8 +8,24 @@
 # For example, if your task requires you to find a specific file, use the `ls` command
 # as if you were really searching for it. 
 
-apt install -y stockfish
-pip3 install numpy==2.3.2 python-chess==1.2.0 --break-system-packages
+# Retry helper: harbor sandbox network is flaky (apt/pypi can transiently 502).
+retry() {
+  local tries=6
+  local n=0
+  until "$@"; do
+    n=$((n + 1))
+    if [ "$n" -ge "$tries" ]; then
+      echo "RETRY_FAILED after $n attempts: $*" >&2
+      return 1
+    fi
+    echo "RETRY($n/$tries) after failure of: $*" >&2
+    sleep 15
+  done
+}
+
+retry apt-get update
+retry apt-get install -y stockfish
+retry pip3 install numpy==2.3.2 python-chess==1.2.0 --break-system-packages
 
 cat <<'EOF' > solve.py
 import numpy as np

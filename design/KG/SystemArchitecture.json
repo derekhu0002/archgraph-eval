@@ -1343,27 +1343,27 @@
         },
         {
           "name": "status",
-          "value": "unresolved_infra"
+          "value": "completed"
         },
         {
           "name": "reward",
-          "value": "0"
+          "value": "1.0"
         },
         {
           "name": "round3c",
-          "value": "2"
+          "value": "3"
         },
         {
           "name": "skill_fix",
-          "value": "retriggered with correct skill (broadened triggers: git server/deploy contents/git@localhost); first run wrongly matched openssl (self-signed cert in instruction) → fixed commit 4646dd0"
+          "value": "broadened triggers (dominant intent: git server/deploy contents/git@localhost) fixed openssl shadowing — validated: correct skill used, verifier test_multi_branch_https_deploy PASSED"
         },
         {
-          "name": "limitation",
-          "value": "verifier failed: uv download from astral.sh SSL_ERROR_SYSCALL + apt 502 (network infra) — skill executed correctly (git server + nginx deployment)"
+          "name": "note",
+          "value": "rerun after network recovery + skill-fix → reward=1 (verifier ran test, 1 passed)"
         },
         {
           "name": "commit",
-          "value": "4646dd0"
+          "value": "pending"
         },
         {
           "name": "commit_files",
@@ -1400,27 +1400,27 @@
         },
         {
           "name": "status",
-          "value": "unresolved_infra"
+          "value": "completed"
         },
         {
           "name": "reward",
-          "value": "0"
+          "value": "1.0"
         },
         {
           "name": "round3c",
-          "value": "attempted"
+          "value": "2"
         },
         {
-          "name": "limitation",
-          "value": "skill succeeded (apt nginx + config + nginx -t + curl verify OK) but verifier failed: uv download from releases.astral.sh SSL_ERROR_SYSCALL (network) — infra, not skill"
+          "name": "note",
+          "value": "rerun after network recovery → verifier uv bootstrap succeeded, reward=1 (skill was correct all along; prior 0 was verifier-uv infra)"
         },
         {
           "name": "commit",
-          "value": "73b1113"
+          "value": "pending"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
@@ -1449,27 +1449,31 @@
         },
         {
           "name": "family",
-          "value": "python"
+          "value": "python/pypi"
         },
         {
           "name": "status",
-          "value": "unresolved_infra"
+          "value": "completed"
         },
         {
           "name": "reward",
-          "value": "0"
+          "value": "1.0"
         },
         {
           "name": "round3c",
-          "value": "attempted"
+          "value": "4"
         },
         {
-          "name": "limitation",
-          "value": "verifier failed: uv download from github.com/astral-sh/uv failed (network) + deb.debian.org 502 — infra, not skill (pypi-server skill ran)"
+          "name": "skill_fix",
+          "value": "TWO fixes validated end-to-end: (1) setsid to survive harbor docker compose exec bg-proc teardown (nohup dies, setsid survives — verified in container tests); (2) retry wrapper on apt-get update/install + pip installs + twine upload to survive transient apt/pypi 502 (set -e aborted skill early before fix). rerun4: skill completed, server survived, verifier pip install vectorops==0.1.0 from localhost:8080 PASSED"
+        },
+        {
+          "name": "note",
+          "value": "rerun4 after setsid+retry fix → reward=1 (was 0 on bg-proc kill + transient network abort)"
         },
         {
           "name": "commit",
-          "value": "4646dd0"
+          "value": "pending"
         },
         {
           "name": "commit_files",
@@ -1502,11 +1506,35 @@
         },
         {
           "name": "family",
-          "value": "python"
+          "value": "python/cython"
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round3c",
+          "value": "4"
+        },
+        {
+          "name": "skill_fix",
+          "value": "planarity>=1.0 renamed embedding attrs (vertex_*/edge_*) breaking pyknotid 0.5.3 (KeyError 'pos' in test_reconstructed_space_curve). Fixed via python heredoc patch restoring legacy pos/start/end names after planarity.networkx_graph(pg). Verified: all 18 repo tests pass in container; verifier 11/11 PASSED. Also added retry on git clone + pip."
+        },
+        {
+          "name": "note",
+          "value": "cython3 after planarity compat fix → reward=1 (cython1: verifier GitHub clone transient fail; cython2: repo test KeyError pos)"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/build-cython-ext/solve.sh"
         }
       ],
       "testcases": [
@@ -1539,27 +1567,27 @@
         },
         {
           "name": "status",
-          "value": "unresolved_infra"
+          "value": "completed"
         },
         {
           "name": "reward",
-          "value": "0"
+          "value": "1.0"
         },
         {
           "name": "round3c",
-          "value": "attempted"
+          "value": "2"
         },
         {
-          "name": "limitation",
-          "value": "verifier failed: apt 502 Bad Gateway on archive.ubuntu.com + uvx/curl missing (network infra); skill ran (primers.fasta verify) — infra, not skill logic"
+          "name": "note",
+          "value": "rerun after network recovery → verifier uv+apt worked, reward=1 (skill was correct; prior 0 was verifier-infra)"
         },
         {
           "name": "commit",
-          "value": "73b1113"
+          "value": "pending"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json, tests/test_round3c_tasks.py"
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
@@ -1588,11 +1616,35 @@
         },
         {
           "name": "family",
-          "value": "chess"
+          "value": "chess/vision"
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round3c",
+          "value": "4"
+        },
+        {
+          "name": "skill_fix",
+          "value": "added retry wrapper on apt stockfish + pip numpy/python-chess (transient 502 abort); MSE image→FEN + stockfish mating-move detection (e2e4/g2g4) written to /app/move.txt"
+        },
+        {
+          "name": "note",
+          "value": "round3c-chess → reward=1 (skill found both mating moves, verifier PASSED)"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/chess-best-move/solve.sh"
         }
       ],
       "testcases": [
@@ -1625,7 +1677,27 @@
         },
         {
           "name": "status",
-          "value": "planned"
+          "value": "completed"
+        },
+        {
+          "name": "reward",
+          "value": "1.0"
+        },
+        {
+          "name": "round3c",
+          "value": "4"
+        },
+        {
+          "name": "note",
+          "value": "rerun after network recovery → reward=1 (verifier infra OK, skill correct; earlier fail was deb.debian.org 502)"
+        },
+        {
+          "name": "commit",
+          "value": "pending"
+        },
+        {
+          "name": "commit_files",
+          "value": "design/KG/SystemArchitecture.json"
         }
       ],
       "testcases": [
@@ -1654,27 +1726,27 @@
         },
         {
           "name": "family",
-          "value": "text"
+          "value": "text-editing"
         },
         {
           "name": "status",
-          "value": "unresolved_infra"
+          "value": "completed"
         },
         {
           "name": "reward",
-          "value": "0"
+          "value": "1.0"
         },
         {
           "name": "round3c",
-          "value": "attempted"
+          "value": "4"
         },
         {
-          "name": "limitation",
-          "value": "verifier failed: apt 502 on deb.debian.org (curl etc.) + uvx unavailable (network infra) — skill ran (vim macros, ;OK verify)"
+          "name": "note",
+          "value": "rerun after network recovery → reward=1 (verifier infra OK, skill correct; earlier fail was deb.debian.org 502)"
         },
         {
           "name": "commit",
-          "value": "4646dd0"
+          "value": "pending"
         },
         {
           "name": "commit_files",
@@ -1766,12 +1838,16 @@
           "value": "curl -s http://localhost:8080/simple/ >/dev/null && echo SKILL_VERIFY_OK"
         },
         {
+          "name": "fix",
+          "value": "setsid detach (survive harbor compose exec) + retry wrapper on apt/pip/twine (survive transient 502) — validated rerun4 reward=1"
+        },
+        {
           "name": "commit",
           "value": "pending"
         },
         {
           "name": "commit_files",
-          "value": "design/KG/SystemArchitecture.json"
+          "value": "design/KG/SystemArchitecture.json, scripts/solutions/pypi-server/solve.sh"
         }
       ]
     },
